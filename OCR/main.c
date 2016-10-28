@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 
+#include "Network/Save.h"
 #include "Network/Core.h"
 #include "Network/Execute.h"
 #include "Network/Display.h"
@@ -42,6 +43,12 @@ int main() {
     // ---- Création du réseau avec ses caractéristiques
     Network *net = network_new(2, 1, 1, 3);
     // ----
+	
+    // ---- Enregistrement du reseau
+
+    Network_to_File(*net);
+
+/*
     
     // ---- Apprentissage du réseau
     teach(net, final, 4, 0.1, 0.1);
@@ -57,6 +64,6 @@ int main() {
     compute(net, *data4);
     printResult(*net);
     // ----
-    
+*/    
     return 0;
 }
