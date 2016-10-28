@@ -1,0 +1,8 @@
+*.o
+*~
+*.tar
+*.tar.gz
+*.tart.bz2
+*.tgz
+*.DS_Store
+*.swp
