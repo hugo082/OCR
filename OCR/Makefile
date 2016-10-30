@@ -16,9 +16,9 @@ IMG_SRCS= $(COMMON_IMG_SRCS) $(IMG_MAIN)
 NET_MAIN= $(NET_DIR)/main.c
 NET_SRCS= $(COMMON_NET_SRCS) $(NET_MAIN)
 
-CPPFLAGS= `pkg-config --cflags sdl2`
+CPPFLAGS= `pkg-config --cflags sdl`
 CFLAGS= -Wall -Wextra -Werror -std=c99 -O3
-LDLIBS= `pkg-config --libs sdl2` -lSDL2_image
+LDLIBS= `pkg-config --libs sdl` -lSDL_image
 
 SRCS= $(COMMON_NET_SRCS) $(COMMON_IMG_SRCS)
 OBJS= $(SRCS)
