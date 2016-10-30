@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "Core.h"
+#include <SDL.h>
 
 /*
  PUBLIC

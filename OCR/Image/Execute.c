@@ -5,24 +5,44 @@
 //  Created by Hugo on 29/10/2016.
 //  Copyright © 2016 hfqt. All rights reserved.
 //
+//  Pour la description des fonctions :
+//  voir le fichier Execute.h
+//
 
 #include "Execute.h"
 
 #define DEBUG 1
+#define CURRENT_PATH "/Users/hugofouquet/Downloads/"
 
-/*
- PUBLIC
- Cherche les lettres dans une image.
- **/
+void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
+    SDL_Surface *dst = malloc(sizeof(SDL_Surface));
+    SDL_Rect dstrect;
+    dstrect.x = 0;
+    dstrect.y = 0;
+    dst = SDL_CreateRGBSurface(0, rect.w, rect.h, 32, 0, 0, 0, 0);
+    if(dst == NULL)
+        errx(54, "CreateRGBSurface failed: %s\n", SDL_GetError());
+    
+    SDL_BlitSurface(src, &rect, dst, &dstrect);
+    if (dst == NULL)
+        errx(55, "SDL_BlitSurface failed: %s\n", SDL_GetError());
+    char *path = malloc(sizeof(char) * 200);
+    strcpy(path, CURRENT_PATH);
+    strcat(path, "Results/");
+    strcat(path, name);
+    SDL_SaveBMP(dst, path);
+    free(path);
+}
+
 void searchLetters(char *path) {
-
-#if DEBUG == 1
+#if DEBUG > 0
     printf("Searching...\n");
 #endif
     
     int len = 0;
     int lettersI = 0;
-    struct LetterFrame *letters = malloc(sizeof(int) * 4 * len);
+    //struct LetterFrame *letters = malloc(sizeof(int) * 4 * len);
+    SDL_Rect *rects = malloc(sizeof(SDL_Rect) * len);
     
     init_sdl();
     SDL_Surface *img = load_image(path);
@@ -34,7 +54,7 @@ void searchLetters(char *path) {
     for (point.y = 0; point.y < img->h; point.y++) {
         for (point.x = 0; point.x < img->w; point.x++) {
             
-            isViewed(letters, len, &point);
+            isViewed(rects, len, &point);
             
             Uint8 r,g,b,a;
             Uint32 pixel = getPixel(img, point);
@@ -45,26 +65,43 @@ void searchLetters(char *path) {
                 int cIndex = 0;
                 
                 struct CPoint *pixels = malloc(sizeof(int) * 2 * pLen);
-                struct LetterFrame cLetter = {.minX = w, .maxX = 0, .minY = h, .maxY = 0};
+                //struct LetterFrame cLetter = {.minX = w, .maxX = 0, .minY = h, .maxY = 0};
+                SDL_Rect cRect = {.x=w, .y=h, .w=0, .h= 0};
                 
-                recOnLetter(img, pixels, &pLen, &cIndex, point, &cLetter);
-                point.x = cLetter.maxX;
+                recOnLetter(img, pixels, &pLen, &cIndex, point, &cRect);
+                point.x = cRect.x + cRect.w;
                 
                 len++;
-                letters = realloc(letters, sizeof(int) * 4 * len);
-                *(letters + lettersI) = cLetter;
-                encadrer(img, cLetter);
+                rects = realloc(rects, sizeof(int) * 4 * len);
+                *(rects + lettersI) = cRect;
+                char *name = malloc(sizeof(char) * 15);
+                sprintf(name, "Letter_%i.bmp", lettersI);
+                extractSurface(img, cRect, name);
                 lettersI++;
                 
-                free(pixels);
-#if DEBUG == 1
-                printf(" Letter founded:\n    x:[%i,%i]\n    y:[%i,%i]\n", cLetter.minX, cLetter.maxX, cLetter.minY, cLetter.maxY);
+#if DEBUG > 1
+                encadrer(img, cRect);
+                printf("Letter %i founded\n", lettersI);
 #endif
+#if DEBUG > 2
+                char *foundedPath = malloc(sizeof(char) * 200);
+                strcpy(foundedPath, CURRENT_PATH);
+                strcat(foundedPath, "founded_tmp.bmp");
+                SDL_SaveBMP(img, foundedPath);
+                free(foundedPath);
+                getchar();
+#endif
+                free(pixels);
+                free(name);
             }
         }
     }
-    SDL_SaveBMP(img, "/Users/hugofouquet/Downloads/founded.bmp");
-#if DEBUG == 1
-    printf("Saved !\n");
+    char *foundedPath = malloc(sizeof(char) * 200);
+    strcpy(foundedPath, CURRENT_PATH);
+    strcat(foundedPath, "founded.bmp");
+    SDL_SaveBMP(img, foundedPath);
+    free(foundedPath);
+#if DEBUG > 0
+    printf("Finish. %i letters founded.\n", lettersI);
 #endif
 }

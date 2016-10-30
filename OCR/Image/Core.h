@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <err.h>
 #include <SDL.h>
-// #include <SDL2/SDL.h>
 #include <SDL_image.h>
 
 /*
@@ -58,25 +57,37 @@ void putpixel(SDL_Surface *surface, unsigned x, unsigned y, Uint32 pixel);
  PUBLIC
  Set la valeur si elle est plus grande.
  **/
-void ifMax(int *value, int max);
+void maxX(SDL_Rect *rect, int value);
 
 /*
  PUBLIC
  Set la valeur si elle est plus petite.
  **/
-void ifMin(int *value, int min);
+void minX(SDL_Rect *rect, int value);
+
+/*
+ PUBLIC
+ Set la valeur si elle est plus grande.
+ **/
+void maxY(SDL_Rect *rect, int value);
+
+/*
+ PUBLIC
+ Set la valeur si elle est plus petite.
+ **/
+void minY(SDL_Rect *rect, int value);
 
 /*
  PUBLIC
  Encadre une lettre en bleu.
  **/
-void encadrer(SDL_Surface *img, struct LetterFrame letter);
+void encadrer(SDL_Surface *img, SDL_Rect rect);
 
 /*
  PUBLIC
  Check si la position est sur une lettre déjà encadré.
  **/
-int isViewed(struct LetterFrame *letters, int len, struct CPoint *point);
+int isViewed(SDL_Rect *rects, int len, struct CPoint *point);
 
 /*
  PUBLIC
@@ -94,6 +105,6 @@ void newPassed(struct CPoint *pixels, int *i, int len, int x, int y);
  PUBLIC
  Recursion sur une lettre
  **/
-void recOnLetter (SDL_Surface *img, struct CPoint *pixels, int *len, int *cIndex, struct CPoint point, struct LetterFrame *letter);
+void recOnLetter (SDL_Surface *img, struct CPoint *pixels, int *len, int *cIndex, struct CPoint point, SDL_Rect *rect);
 
 #endif /* Core_h */
