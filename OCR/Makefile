@@ -32,10 +32,10 @@ all: main
 main: ${OBJS}
 
 img: $(IMG_SRCS)
-	$(CC) $(CFLAGS) $(LDLIBS) $(CPPFLAGS) $(LDFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDLIBS) $(CPPFLAGS) $(LDFLAGS) $^ -o $@ -lm
 
 net: $(NET_SRCS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@ -lm
 
 help:
 	@echo tap \'make\' or \'make main\'for global project $@
