@@ -79,52 +79,8 @@ int Network_to_File(Network net){
 		strcat(nByLayer_s, stop);
 		char *out_s = malloc( sizeof (*out_s) * digit_number(net.out));
         sprintf(out_s, "%d", net.out);
-		strcat(out_s, stop);
-		/*char *totalH_s = malloc( sizeof (*totalH_s) * digit_number(net.totalH));
-        sprintf(totalH_s, "%d", net.totalH);
-		strcat(totalH_s, stop);*/
-		/*char *weight = tab_to_string(net, 0);
-		strcat(weight, stop);
-		char *A = tab_to_string(net, 1);
-		strcat(A, stop);
-		char *In = tab_to_string(net,2);
-		strcat(In, stop);
-		char *D = tab_to_string(net,3);
-		strcat(D, stop);*/
-	
+		strcat(out_s, stop);		
 		
-		/*char s_1[10] = "[enters=";
-		strcat(s_1, enter_s);
-		char s_2[10] = "hLayers=";
-		strcat(s_2, hLayers_s);
-		char s_3[15] = "nBylayer=";
-		strcat(s_3, nByLayer_s);
-		char s_4[15] = "out=";
-		strcat(s_4, out_s);*/
-		/*char s_5[15] = "totalH=";
-		strcat(s_5, totalH_s);*/
-		/*char s_6[15] = "weight=";
-		strcat(s_6, weight);
-		char s_7[15] = "A=";
-		strcat(s_7, A);
-		char s_8[15] = "In=";
-		strcat(s_8, In);
-		char s_9[15] = "D=";
-		strcat(s_9, D);*/
-		
-		
-		/*char result[1000] ="";
-		strcat(result, s_1);
-		strcat(result, s_2);
-		strcat(result, s_3);
-		strcat(result, s_4);
-		//strcat(result, s_5);
-		
-		/*strcat(result, s_7);
-		strcat(result, s_8);
-		strcat(result, s_9);*/
-		//printf("%s", result);
-		//fputs(result, fichier);//TERMINEZ DE REMPLIR LE FICHIERS AVEC LES VALEURS, PS IL FAUT MODIFIER LA FONCTION DU DESSUS
 		fputs("[enters=", fichier);
 		fputs(enter_s, fichier);
 		fputs("hLayers=", fichier);
@@ -161,26 +117,7 @@ int string_to_value(char *str_){
 	int value = 0;
 	while (*str_ != ';'){
 		value = value * 10;
-		if ((*str_ == 48))
-			value += 0;
-		if ((*str_ == 49))
-			value += 1;
-		if ((*str_ == 50))
-			value += 2;
-		if ((*str_ == 51))
-			value += 3;
-		if ((*str_ == 52))
-			value += 4;
-		if ((*str_ == 53))
-			value += 5;
-		if ((*str_ == 54))
-			value += 6;
-		if ((*str_ == 55))
-			value += 7;
-		if ((*str_ == 56))
-			value += 8;
-		if ((*str_ == 57))
-			value += 9;
+		value += (*str_ - 48);
 		str_ += 1;
 	}
 	return value; 	
@@ -231,19 +168,23 @@ char *delete_str(char *s){
 } 
 
 /*double string_to_double(char *str_){
-	
+	char value_s[1] = " ";
+	char v[1] = " ";
 	while (*str_ != '='){
 		str_ += 1;
 	}
 	str_ += 1;
-	int value = 0;
 	while (*str_ != '_'){
-		s
+		*v = *str_;
+		strcat(value_s, v);
 		str_ += 1;
 		
 	}
+	double value;
+	sscanf(value_s, "%lf", &value);
+	//printf("%lf", d);
 	return value; 	
-}*/
+}
 
 double *string_to_tab(char *s, int l){
 	double *tab = malloc(sizeof( double ) * l);
@@ -252,45 +193,18 @@ double *string_to_tab(char *s, int l){
 		s += 1;
 	}
 	while (*s != ';'){
-		double value = 0;//string_to_double(s);
-		/*
-		double dec = 1;
-		while (*s != '.'){
-			s += 1;
-		}
-		while (*s != '_'){
-			dec =  dec / 10;
-			if ((*s == 48))
-				value += dec * 0;
-			if ((*s == 49))
-				value += dec * 1;
-			if ((*s == 50))
-				value += dec * 2;
-			if ((*s == 51))
-				value += dec * 3;
-			if ((*s == 52))
-				value += dec * 4;
-			if ((*s == 53))
-				value += dec * 5;
-			if ((*s == 54))
-				value += dec * 6;
-			if ((*s == 55))
-				value += dec * 7;
-			if ((*s == 56))
-				value += dec * 8;
-			if ((*s == 57))
-				value += dec * 9;
-			s += 1;
-		}*/
-		s += 1;
+		double value = string_to_double(s);
 		*tab = value;
 		printf("%f", value);
 		tab += 1;
+		while(*s != '_'){
+			s += 1;
+		}
+		s += 1;
 		
-	}
-	
+	}	
 	return result;
-}
+}*/
 
 Network *File_to_Network(){
 
@@ -346,27 +260,17 @@ int main(){
     // ----
     
     // ---- Création du réseau avec ses caractéristiques
-    //Network *net = network_new(2, 1, 1, 3);
+    Network *net = network_new(2, 1, 1, 3);
     // ----
 	    
     // ---- Apprentissage du réseau
-    //teach(net, final, 4, 0.1, 0.1);
+    teach(net, final, 4, 0.1, 0.1);
     // ----
-	/*char stop[1] = ";";
-	/*char *weight = tab_to_string(*net, 0);
-	strcat(weight, stop);
-	printf("%s", weight);
-	char *A = tab_to_string(*net, 1);
-	strcat(A, stop);
-	char *In = tab_to_string(*net,2);
-	strcat(In, stop);
-	char *D = tab_to_string(*net,3);
-	strcat(D, stop);*/
-	//tab_to_string(*net, 0);
+	
     // ---- Enregistrement du reseau
+    Network_to_File(*net);
+    // ----
 
-    //Network_to_File(*net);
-	// ----
 /*    
     // ---- Exécution sur des données pour le tester
     compute(net, *data);
@@ -387,6 +291,6 @@ int main(){
 	/*
 	int n = string_to_value("enters=1234;");
 	printf("%d", n);*/
-	Network *z = File_to_Network();
+	//Network *z = File_to_Network();
 	return 0;
 }

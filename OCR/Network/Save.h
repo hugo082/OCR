@@ -60,7 +60,7 @@ char *delete_str(char *s);
 /*
 	String vers tableau de double
 **/
-double *string_to_tab(char *s, int l);
+//double *string_to_tab(char *s, int l);
 
 /*
 	Retourne un reseau de neurone paramétré selon les valeurs présente dans le fichier de sauvegarde
