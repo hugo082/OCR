@@ -35,7 +35,7 @@ img: $(IMG_SRCS)
 	$(CC) $(CFLAGS) $(LDLIBS) $(CPPFLAGS) $(LDFLAGS) $^ -o $@
 
 net: $(NET_SRCS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 help:
 	@echo tap \'make\' or \'make main\'for global project $@
