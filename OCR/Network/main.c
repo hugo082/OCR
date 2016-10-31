@@ -78,18 +78,18 @@ int main() {
     printResult(*net);
     // ----
     
-//    char response;
-//    do {
-//        printf("Do you want save learning ? (Y/N)");
-//        response = *(getLine(10));
-//    } while (response != 'Y' && response != 'N');
-//    
-//    if (response == 'Y') {
-//        Network_to_File(*net);
-//        printf("Saved !\n");
-//    } else {
-//        printf("Ignored !\n");
-//    }
+    char response;
+    do {
+        printf("Do you want save learning ? (Y/N)");
+        response = *(getLine(10));
+    } while (response != 'Y' && response != 'N');
+    
+    if (response == 'Y') {
+        Network_to_File(*net);
+        printf("Saved !\n");
+    } else {
+        printf("Ignored !\n");
+    }
     
     return 0;
 }

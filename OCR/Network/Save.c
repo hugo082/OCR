@@ -224,58 +224,58 @@ Network *File_to_Network(){
 	
 }
 
-int main(){
-
-	 
-    // EXEMPLE D'UTILISATION
-    
-    
-    // ---- Création des données sources
-    double enters[2] = {1,1};
-    double out[1] = {0};
-    DataSource *data = data_new(enters, out, 2, 2, 0);
-    double enters2[2] = {1,0};
-    double out2[1] = {1};
-    DataSource *data2 = data_new(enters2, out2, 2, 2, 1);
-    double enters3[2] = {0,1};
-    double out3[1] = {1};
-    DataSource *data3 = data_new(enters3, out3, 2, 2, 1);
-    double enters4[2] = {0,0};
-    double out4[1] = {0};
-    DataSource *data4 = data_new(enters4, out4, 2, 2, 0);
-    
-    DataSource *final = malloc(sizeof(DataSource) * 4);
-    final[0] = *data;
-    final[1] = *data2;
-    final[2] = *data3;
-    final[3] = *data4;
-    // ----
-    
-    // ---- Création du réseau avec ses caractéristiques
-    Network *net = network_new(2, 1, 1, 3);
-    // ----
-	    
-    // ---- Apprentissage du réseau
-    teach(net, final, 4, 0.1, 0.1);
-    // ----
-	
-    // ---- Enregistrement du reseau
-    Network_to_File(*net);
-    // ----
-
-    
-    // ---- Exécution sur des données pour le tester
-    /*compute(net, *data);
-    printResult(*net);
-    compute(net, *data2);
-    printResult(*net);
-    compute(net, *data3);
-    printResult(*net);
-    compute(net, *data4);
-    printResult(*net);*/
-    // ----
-	
-	//Network *z = File_to_Network();
-	return 0;
-}
+//int main(){
+//
+//	 
+//    // EXEMPLE D'UTILISATION
+//    
+//    
+//    // ---- Création des données sources
+//    double enters[2] = {1,1};
+//    double out[1] = {0};
+//    DataSource *data = data_new(enters, out, 2, 2, 0);
+//    double enters2[2] = {1,0};
+//    double out2[1] = {1};
+//    DataSource *data2 = data_new(enters2, out2, 2, 2, 1);
+//    double enters3[2] = {0,1};
+//    double out3[1] = {1};
+//    DataSource *data3 = data_new(enters3, out3, 2, 2, 1);
+//    double enters4[2] = {0,0};
+//    double out4[1] = {0};
+//    DataSource *data4 = data_new(enters4, out4, 2, 2, 0);
+//    
+//    DataSource *final = malloc(sizeof(DataSource) * 4);
+//    final[0] = *data;
+//    final[1] = *data2;
+//    final[2] = *data3;
+//    final[3] = *data4;
+//    // ----
+//    
+//    // ---- Création du réseau avec ses caractéristiques
+//    Network *net = network_new(2, 1, 1, 3);
+//    // ----
+//	    
+//    // ---- Apprentissage du réseau
+//    teach(net, final, 4, 0.1, 0.1);
+//    // ----
+//	
+//    // ---- Enregistrement du reseau
+//    Network_to_File(*net);
+//    // ----
+//
+//    
+//    // ---- Exécution sur des données pour le tester
+//    /*compute(net, *data);
+//    printResult(*net);
+//    compute(net, *data2);
+//    printResult(*net);
+//    compute(net, *data3);
+//    printResult(*net);
+//    compute(net, *data4);
+//    printResult(*net);*/
+//    // ----
+//	
+//	//Network *z = File_to_Network();
+//	return 0;
+//}
 
