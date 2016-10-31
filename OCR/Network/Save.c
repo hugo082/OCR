@@ -129,7 +129,7 @@ int Network_to_File(Network net){
 		fputs(enter_s, fichier);
 		fputs("hLayers=", fichier);
 		fputs(hLayers_s, fichier);
-		fputs("nBylayer_s", fichier);
+		fputs("nBylayer_s=", fichier);
 		fputs(nByLayer_s, fichier);
 		fputs("out=", fichier);
 		fputs(out_s, fichier);
@@ -230,40 +230,20 @@ char *delete_str(char *s){
 	return result;
 } 
 
-double string_to_double(char *str_){
+/*double string_to_double(char *str_){
 	
 	while (*str_ != '='){
 		str_ += 1;
 	}
 	str_ += 1;
 	int value = 0;
-	while (*str_ != '.'){
-		value = value * 10;
-		if ((*str_ == 48))
-			value += 0;
-		if ((*str_ == 49))
-			value += 1;
-		if ((*str_ == 50))
-			value += 2;
-		if ((*str_ == 51))
-			value += 3;
-		if ((*str_ == 52))
-			value += 4;
-		if ((*str_ == 53))
-			value += 5;
-		if ((*str_ == 54))
-			value += 6;
-		if ((*str_ == 55))
-			value += 7;
-		if ((*str_ == 56))
-			value += 8;
-		if ((*str_ == 57))
-			value += 9;
+	while (*str_ != '_'){
+		s
 		str_ += 1;
 		
 	}
 	return value; 	
-}
+}*/
 
 double *string_to_tab(char *s, int l){
 	double *tab = malloc(sizeof( double ) * l);
@@ -272,7 +252,7 @@ double *string_to_tab(char *s, int l){
 		s += 1;
 	}
 	while (*s != ';'){
-		double value = string_to_double(s);
+		double value = 0;//string_to_double(s);
 		/*
 		double dec = 1;
 		while (*s != '.'){
@@ -326,13 +306,13 @@ Network *File_to_Network(){
 	int len_w = enter * nbLayer + out * nbLayer + (hLayers - 1) * (nbLayer * nbLayer);
 	int len_other = enter + out + (hLayers * nbLayer);
 	//printf("%s", s);
-	/*printf("%d", enter);
+	printf("%d", enter);
 	printf("%d", hLayers);
 	printf("%d", nbLayer);
-	printf("%d", out);*/
+	printf("%d", out);
 	
 	Network *net = network_new(enter, out, hLayers, nbLayer);
-	string_to_tab(s, len_w);
+	//string_to_tab(s, len_w);
 	return net;
 
 	
