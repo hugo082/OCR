@@ -20,12 +20,34 @@
 **/
 int digit_number(int n);
 
-//char[] tab_to_string(Network net);
-
-
 /*
 	Sauvegarde tout les parametres dans un fichier texte
 **/
 int Network_to_File(Network net);
+
+/*
+	Retourne la valeur int d'une variable enregistré dans le fichier de 	sauvegarde. Prend une chaine de charactère en paramètre.
+**/
+int string_to_value(char *str_);
+
+/*
+	Retourne la chaine de caractère contenant toute les valeurs du network.
+**/
+char *File_to_string();
+
+/*
+	Retourne la chaine de caractère contenant les valeurs du network moins la derniere valeur recupéré.
+**/
+char *delete_str(char *s);
+
+/*
+	Retourne un reseau de neurone paramétré selon les valeurs présente dans le fichier de sauvegarde
+**/
+Network *File_to_Network();
+
+
+
+
+
 
 #endif
