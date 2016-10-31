@@ -13,10 +13,14 @@
 
 void printResult(Network net) {
     int begin, end;
-    getNeurons(net, net.hLayers + 1, &begin, &end);
     printf("Result of Network:\n");
+    getNeurons(net, 0, &begin, &end);
     for (int i = begin; i <= end; i++) {
-        printf("   Output %i - %i: %f\n", i, i - begin, net.A[i]);
+        printf("   Enter %i : %f\n", i, net.A[i]);
+    }
+    getNeurons(net, net.hLayers + 1, &begin, &end);
+    for (int i = begin; i <= end; i++) {
+        printf("   Output %i (%i): %f\n", i - begin, i, net.A[i]);
     }
 }
 

@@ -13,11 +13,24 @@
 #include "Execute.h"
 #include "Display.h"
 
+char* getLine(int maxSize) {
+    int i = 0, c = 0;
+    char *buffer = malloc(sizeof(char) * maxSize);
+    while ((c = getchar()) != 10 && i < maxSize)
+        *(buffer + i++) = c;
+    return buffer;
+}
+
 int main() {
     
+    double errCoef;
+    do {
+        printf("Max Error : ");
+        char *err = getLine(10);
+        errCoef = atof(err);
+    } while (errCoef <= 0);
     
     // EXEMPLE D'UTILISATION
-    
     
     // ---- Création des données sources
     double enters[2] = {1,1};
@@ -51,7 +64,7 @@ int main() {
 
     
     // ---- Apprentissage du réseau
-    teach(net, final, 4, 0.1, 0.1);
+    teach(net, final, 4, errCoef, 0.1);
     // ----
     
     // ---- Exécution sur des données pour le tester
@@ -64,6 +77,19 @@ int main() {
     compute(net, *data4);
     printResult(*net);
     // ----
+    
+//    char response;
+//    do {
+//        printf("Do you want save learning ? (Y/N)");
+//        response = *(getLine(10));
+//    } while (response != 'Y' && response != 'N');
+//    
+//    if (response == 'Y') {
+//        Network_to_File(*net);
+//        printf("Saved !\n");
+//    } else {
+//        printf("Ignored !\n");
+//    }
     
     return 0;
 }

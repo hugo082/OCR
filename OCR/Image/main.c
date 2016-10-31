@@ -31,7 +31,7 @@ int main() {
     
     init_sdl();
     SDL_Surface *img = load_image(path);
-    transformToBlackOrWhite(img, 350);
+    transformToBlackOrWhite(img, 200);
     searchLettersWithSurface(img);
     
     return 0;
