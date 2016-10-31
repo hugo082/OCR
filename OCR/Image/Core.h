@@ -107,4 +107,11 @@ void newPassed(struct CPoint *pixels, int *i, int len, int x, int y);
  **/
 void recOnLetter (SDL_Surface *img, struct CPoint *pixels, int *len, int *cIndex, struct CPoint point, SDL_Rect *rect);
 
+/*
+ PUBLIC
+ Transforme une image en Noir/Blanc.
+ Sensibility est le seuil.
+ **/
+void transformToBlackOrWhite(SDL_Surface *img, int sensitivity);
+
 #endif /* Core_h */

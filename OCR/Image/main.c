@@ -8,9 +8,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "Core.h"
 #include "Execute.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 char* getLine(int maxSize) {
     int i = 0, c = 0;
@@ -21,13 +22,17 @@ char* getLine(int maxSize) {
 }
 
 int main() {
-    
 #if DEBUG < 1
     printf("Path : ");
     char *path = getLine(100);
-    searchLetters(path);
 #else
-    searchLetters("/Users/hugofouquet/Downloads/IMG_SRC/PERSO/TD.jpg");
+    char *path = "/Users/hugofouquet/Downloads/IMG_SRC/PERSO/TD.jpg";
 #endif
+    
+    init_sdl();
+    SDL_Surface *img = load_image(path);
+    transformToBlackOrWhite(img, 350);
+    searchLettersWithSurface(img);
+    
     return 0;
 }

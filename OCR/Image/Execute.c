@@ -34,18 +34,21 @@ void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
     free(path);
 }
 
-void searchLetters(char *path) {
+void searchLettersWithPath(char *path) {
+    init_sdl();
+    SDL_Surface *img = load_image(path);
+    searchLettersWithSurface(img);
+}
+
+void searchLettersWithSurface(SDL_Surface *img) {
+    init_sdl();
 #if DEBUG > 0
     printf("Searching...\n");
 #endif
     
     int len = 0;
     int lettersI = 0;
-    //struct LetterFrame *letters = malloc(sizeof(int) * 4 * len);
     SDL_Rect *rects = malloc(sizeof(SDL_Rect) * len);
-    
-    init_sdl();
-    SDL_Surface *img = load_image(path);
     
     int w = img->w;
     int h = img->h;
@@ -65,7 +68,6 @@ void searchLetters(char *path) {
                 int cIndex = 0;
                 
                 struct CPoint *pixels = malloc(sizeof(int) * 2 * pLen);
-                //struct LetterFrame cLetter = {.minX = w, .maxX = 0, .minY = h, .maxY = 0};
                 SDL_Rect cRect = {.x=w, .y=h, .w=0, .h= 0};
                 
                 recOnLetter(img, pixels, &pLen, &cIndex, point, &cRect);
@@ -105,3 +107,7 @@ void searchLetters(char *path) {
     printf("Finish. %i letters founded.\n", lettersI);
 #endif
 }
+
+//void transformToBlackAndWhite(SDL_Surface *img) {
+//    transform(img, int sensitivity) {
+//}

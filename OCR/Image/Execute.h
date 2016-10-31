@@ -16,7 +16,22 @@
 /*
  PUBLIC
  Cherche les lettres dans une image.
+ Prends le chemin de l'image.
  **/
-void searchLetters(char *path);
+void searchLettersWithPath(char *path);
+
+/*
+ PUBLIC
+ Cherche les lettres dans une image.
+ Prends la surface.
+ **/
+void searchLettersWithSurface(SDL_Surface *img);
+
+/*
+ PUBLIC
+ Cherche les lettres dans une image.
+ Prends la surface.
+ **/
+//void transformToBlackAndWhite(void);
 
 #endif /* Execute_h */

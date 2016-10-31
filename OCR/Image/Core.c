@@ -230,3 +230,29 @@ void _recOnLetter (SDL_Surface *img, struct CPoint *pixels, int *len, int *cInde
 void recOnLetter (SDL_Surface *img, struct CPoint *pixels, int *len, int *cIndex, struct CPoint point, SDL_Rect *rect) {
     _recOnLetter(img, pixels, len, cIndex, point.x, point.y, rect, 0);
 }
+
+// Black and White
+
+/*
+ Transforme une image en Noir/Blanc.
+ Sensibility est le seuil.
+ **/
+void transformToBlackOrWhite(SDL_Surface *img, int sensitivity) {
+    for (int x = 0; x < img->w; ++x) {
+        for (int y = 0; y < img->h; ++y) {
+            Uint32 pix = _getPixel(img, x, y);
+            Uint8 r = 0;
+            Uint8 g = 0;
+            Uint8 b = 0;
+            SDL_GetRGB(pix, img->format, &r, &g, &b);
+            if (r+g+b > sensitivity)
+                pix = SDL_MapRGB(img->format, 255, 255, 255);
+            else
+                pix = SDL_MapRGB(img->format, 0, 0, 0);
+            putpixel(img, x, y, pix);
+        }
+    }
+}
+
+
+
