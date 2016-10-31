@@ -217,8 +217,8 @@ Network *File_to_Network(){
 	s = delete_str(s);
 	int out = string_to_value(s);
 	s = delete_str(s);
-	int len_w = enter * nbLayer + out * nbLayer + (hLayers - 1) * (nbLayer * nbLayer);
-	int len_other = enter + out + (hLayers * nbLayer);
+	/*int len_w = enter * nbLayer + out * nbLayer + (hLayers - 1) * (nbLayer * nbLayer);
+	int len_other = enter + out + (hLayers * nbLayer);*/
 	//printf("%s", s);
 	printf("%d", enter);
 	printf("%d", hLayers);
@@ -232,7 +232,7 @@ Network *File_to_Network(){
 	
 }
 
-int main(){
+/*int main(){
 
 	 
     // EXEMPLE D'UTILISATION
@@ -271,7 +271,7 @@ int main(){
     Network_to_File(*net);
     // ----
 
-/*    
+    
     // ---- Exécution sur des données pour le tester
     compute(net, *data);
     printResult(*net);
@@ -282,15 +282,16 @@ int main(){
     compute(net, *data4);
     printResult(*net);
     // ----
-*/    
+   
 	
 	//Network *net = network_new(2, 1, 1, 3);
 	//Network_to_File(*net);
 
 	//File_to_Network();
-	/*
+	
 	int n = string_to_value("enters=1234;");
-	printf("%d", n);*/
+	printf("%d", n);
 	//Network *z = File_to_Network();
 	return 0;
-}
+}*/
+

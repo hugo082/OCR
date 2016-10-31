@@ -1,6 +1,6 @@
 ## Simple SDL mini code
 
-CC=clang
+CC=gcc
 
 # Directories
 NET_DIR= Network
@@ -18,6 +18,7 @@ NET_SRCS= $(COMMON_NET_SRCS) $(NET_MAIN)
 
 CPPFLAGS= `pkg-config --cflags sdl`
 CFLAGS= -Wall -Wextra -Werror -std=c99 -O3
+LDFLAGS= -lm
 LDLIBS= `pkg-config --libs sdl` -lSDL_image
 
 SRCS= $(COMMON_NET_SRCS) $(COMMON_IMG_SRCS)
