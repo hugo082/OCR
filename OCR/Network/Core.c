@@ -10,6 +10,7 @@
 //
 
 #include "Core.h"
+#include <math.h>
 
 /*
  Retoune un random double entre deux bornes.
