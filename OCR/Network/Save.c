@@ -167,12 +167,9 @@ char *delete_str(char *s){
 	return result;
 } 
 
-/*double string_to_double(char *str_){
+double string_to_double(char *str_){
 	char value_s[1] = " ";
 	char v[1] = " ";
-	while (*str_ != '='){
-		str_ += 1;
-	}
 	str_ += 1;
 	while (*str_ != '_'){
 		*v = *str_;
@@ -196,15 +193,10 @@ double *string_to_tab(char *s, int l){
 		double value = string_to_double(s);
 		*tab = value;
 		printf("%f", value);
-		tab += 1;
-		while(*s != '_'){
-			s += 1;
-		}
-		s += 1;
-		
+		tab += 1;		
 	}	
 	return result;
-}*/
+}
 
 Network *File_to_Network(){
 
@@ -232,7 +224,7 @@ Network *File_to_Network(){
 	
 }
 
-/*int main(){
+int main(){
 
 	 
     // EXEMPLE D'UTILISATION
@@ -273,25 +265,17 @@ Network *File_to_Network(){
 
     
     // ---- Exécution sur des données pour le tester
-    compute(net, *data);
+    /*compute(net, *data);
     printResult(*net);
     compute(net, *data2);
     printResult(*net);
     compute(net, *data3);
     printResult(*net);
     compute(net, *data4);
-    printResult(*net);
+    printResult(*net);*/
     // ----
-   
 	
-	//Network *net = network_new(2, 1, 1, 3);
-	//Network_to_File(*net);
-
-	//File_to_Network();
-	
-	int n = string_to_value("enters=1234;");
-	printf("%d", n);
 	//Network *z = File_to_Network();
 	return 0;
-}*/
+}
 
