@@ -11,7 +11,7 @@
 
 #include "Execute.h"
 
-#define DEBUG 1
+#define DEBUG 2
 #define CURRENT_PATH "/Users/hugofouquet/Downloads/"
 
 void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
@@ -64,7 +64,7 @@ void searchLettersWithSurface(SDL_Surface *img) {
             SDL_GetRGBA(pixel, img->format, &r, &g, &b, &a);
             
             if ((r + g + b) < 50) {
-                int pLen = 1024;
+                int pLen = 5096;
                 int cIndex = 0;
                 
                 struct CPoint *pixels = malloc(sizeof(int) * 2 * pLen);
@@ -83,7 +83,7 @@ void searchLettersWithSurface(SDL_Surface *img) {
                 
 #if DEBUG > 1
                 encadrer(img, cRect);
-                printf("Letter %i founded\n", lettersI);
+                //printf("Letter %i founded\n", lettersI);
 #endif
 #if DEBUG > 2
                 char *foundedPath = malloc(sizeof(char) * 200);
@@ -99,7 +99,7 @@ void searchLettersWithSurface(SDL_Surface *img) {
         }
     }
     char *foundedPath = malloc(sizeof(char) * 200);
-    strcpy(foundedPath, CURRENT_PATH);
+    //strcpy(foundedPath, CURRENT_PATH);
     strcat(foundedPath, "founded.bmp");
     SDL_SaveBMP(img, foundedPath);
     free(foundedPath);
