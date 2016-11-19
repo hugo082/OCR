@@ -167,35 +167,32 @@ char *delete_str(char *s){
 	return result;
 } 
 
-double string_to_double(char *str_){
-	char value_s[1] = " ";
-	char v[1] = " ";
-	str_ += 1;
-	while (*str_ != '_'){
-		*v = *str_;
-		strcat(value_s, v);
-		str_ += 1;
-		
+double string_to_double(char *str_, int *cIndex){
+    
+    int startIndex = *cIndex;
+    
+    char *value = malloc(sizeof(char) * 20);
+	while (*(str_ + *cIndex) != '_'){
+		strcat(value, *(str_ + *cIndex));
+		*cIndex += 1;
 	}
-	double value;
-	sscanf(value_s, "%lf", &value);
-	//printf("%lf", d);
+	double value = atof(value);
 	return value; 	
 }
 
 double *string_to_tab(char *s, int l){
+    int cIndex = 0;
+    int cTabIndex = 0;
 	double *tab = malloc(sizeof( double ) * l);
-	double *result = tab;
-	while (*s != '='){
-		s += 1;
-	}
-	while (*s != ';'){
-		double value = string_to_double(s);
-		*tab = value;
+	while (*(s + i) != '=')
+		i += 1;
+	while (*(s + i) != ';'){
+		double value = string_to_double(s, &cIndex);
+		*(tab + cTabIndex) = value;
 		printf("%f", value);
-		tab += 1;		
+		cTabIndex += 1;
 	}	
-	return result;
+	return tab;
 }
 
 Network *File_to_Network(){
