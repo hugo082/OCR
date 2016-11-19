@@ -21,7 +21,10 @@
 #define eOUT 26
 #define hLAYERS 1
 #define nBY_LAYER 29
-#define MIN_ERR 0.3
+#define MIN_ERR 0.1
+
+#define BW_FOLDER_PATH "/Users/hugofouquet/Epita/IMG_SRC/8x8/A-Z_OCR/BW/"
+#define POLICE_NAME "_OCR.jpg"
 
 // Global Variable
 Network *net;
@@ -299,8 +302,63 @@ int check_command(char *buffer) {
     return 1;
 }
 
+int debug_main(){
+    init_sdl();
+    int size = 'Z' - 'A';
+    DataSource *trainingSet = malloc(sizeof(DataSource) * size);
+    for (char c = 'A'; c <= 'Z'; c++) {
+        int index = c - 'A';
+        char *fullName = concat(BW_FOLDER_PATH, c, POLICE_NAME);
+        SDL_Surface *s = load_image(fullName);
+        //        transformToBlackOrWhite(s, 400);
+        //        char *newName = concat( "/Users/hugofouquet/Epita/IMG_SRC/8x8/OCR/", c, "_OCR_BW.jpg");
+        //        SDL_SaveBMP(s, newName);
+        int sSize = s->h * s->w;
+        double *enters = malloc(sizeof(double) * sSize);
+        for (int y = 0; y < s->h; y++) {
+            int delta = s->w * y;
+            for (int x = 0; x < s->w; x++) {
+                struct CPoint p = {.x=x, .y=y};
+                Uint8 r,g,b,a;
+                Uint32 pixel =getPixel(s, p);
+                SDL_GetRGBA(pixel, s->format, &r, &g, &b, &a);
+                enters[delta + x] = ((r + g + b) / (3 * 255)) != 0;
+            }
+        }
+        double *out = malloc(sizeof(double) * size);
+        for (int l = 'A'; l <= 'Z'; l++) {
+            int delta = l - 'A';
+            out[delta] = l == c;
+        }
+        int response = (index) / size;
+        DataSource *d = data_new(enters, out, sSize, size, response);
+        d->identifier = concat("", c, POLICE_NAME);
+        trainingSet[index] = *d;
+        free(fullName);
+        free(s);
+    }
+    
+    // ---- Création du réseau avec ses caractéristiques + app
+    Network *n = network_new(eSIZE, eOUT, hLAYERS, nBY_LAYER);
+    teach(n, trainingSet, size, MIN_ERR, 0.1);
+    // ----
+    
+    // ---- Exécution sur des données pour le tester
+    for (int i = 0; i < size; i++) {
+        DataSource d = trainingSet[i];
+        compute(n, d);
+        printTheoricalResult(*n, d);
+    }
+    // ----
+    return 0;
+}
+
 
 int main() {
+#if DEBUG == 1
+    printf("Debug Version\n");
+    return debug_main();
+#endif
     printf("Hello !\n   You can use 'load', 'prepro', 'teach', 'compute' or 'init command.\n");
     init_sdl();
     char *cmd = NULL;
