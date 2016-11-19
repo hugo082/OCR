@@ -6,12 +6,17 @@
 //  Copyright © 2016 hfqt. All rights reserved.
 //
 
-#ifndef Execute_h
-#define Execute_h
+#ifndef IMG_Execute_h
+#define IMG_Execute_h
 
 #include <stdio.h>
 #include "Core.h"
+
+#if __APPLE_XCODE__
+#include "SDL2/SDL.h"
+#else
 #include <SDL.h>
+#endif
 
 /*
  PUBLIC
@@ -34,4 +39,4 @@ void searchLettersWithSurface(SDL_Surface *img);
  **/
 //void transformToBlackAndWhite(void);
 
-#endif /* Execute_h */
+#endif /* IMG_Execute_h */

@@ -6,8 +6,8 @@
 //  Copyright © 2016 hfqt. All rights reserved.
 //
 
-#ifndef Execute_h
-#define Execute_h
+#ifndef NET_Execute_h
+#define NET_Execute_h
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,7 +21,7 @@
  errorCoeff : Coefficient d'erreur maximum
  learningCoeff : Coefficient d'apprentissage (~0.1)
  **/
-void teach(Network *net, DataSource data[], int dataLen, double errorCoeff, double learningCoeff);
+void teach(Network *net, DataSource data[], size_t dataLen, double errorCoeff, double learningCoeff);
 
 /*
  PUBLIC
@@ -35,4 +35,4 @@ void compute(Network *net, DataSource data);
  **/
 double teachData(Network *net, DataSource data, double alpha);
 
-#endif /* Execute_h */
+#endif /* NET_Execute_h */

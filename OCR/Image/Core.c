@@ -21,10 +21,9 @@ void init_sdl(void) {
 }
 
 SDL_Surface* load_image(char *path) {
-    SDL_Surface *img;
-    img = IMG_Load(path);
+    SDL_Surface *img = IMG_Load(path);
     if (!img)
-        errx(3, "can't load %s: %s", path, IMG_GetError());
+        warnx("can't load %s: %s \n", path, IMG_GetError());
     return img;
 }
 
@@ -254,5 +253,19 @@ void transformToBlackOrWhite(SDL_Surface *img, int sensitivity) {
     }
 }
 
+// For Network
 
-
+double* load_enters(SDL_Surface *s) {
+    double *enters = malloc(sizeof(double) * (s->h * s->w));
+    for (int y = 0; y < s->h; y++) {
+        int delta = s->w * y;
+        for (int x = 0; x < s->w; x++) {
+            struct CPoint p = {.x=x, .y=y};
+            Uint8 r,g,b,a;
+            Uint32 pixel =getPixel(s, p);
+            SDL_GetRGBA(pixel, s->format, &r, &g, &b, &a);
+            enters[delta + x] = ((r + g + b) / (3 * 255)) != 0;
+        }
+    }
+    return enters;
+}

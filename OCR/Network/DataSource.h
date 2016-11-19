@@ -6,19 +6,28 @@
 //  Copyright © 2016 hfqt. All rights reserved.
 //
 
-#ifndef DataSource_h
-#define DataSource_h
+#ifndef NET_DataSource_h
+#define NET_DataSource_h
 
 #include <stdlib.h>
 
+#if __APPLE_XCODE__
+#include "SDL2/SDL.h"
+#include "SDL2_image/SDL_image.h"
+#else
+#include <SDL.h>
+#include <SDL_image.h>
+#endif
+
 typedef struct _DataSource DataSource;
 struct _DataSource {
-    int     entersCount;
-    int     outCount;
-    double   response;
+    char *identifier;
+    SDL_Surface *suface;
     
-    double    *enters;
-    double    *out;
+    int entersCount, outCount;
+    double response;
+    
+    double *enters, *out;
 };
 
 /*
@@ -31,4 +40,4 @@ DataSource *data_new(double enters[], double out[], int eCount, int oCount, int 
 
 // Fonction qui prend une image (d'une lettre) et la converti en data...
 
-#endif /* DataSource_h */
+#endif /* NET_DataSource_h */

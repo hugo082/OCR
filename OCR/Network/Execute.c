@@ -10,7 +10,7 @@
 
 #define DEBUGID 1
 
-void teach(Network *net, DataSource data[], int dataLen, double errorCoeff, double learningCoeff) {
+void teach(Network *net, DataSource data[], size_t dataLen, double errorCoeff, double learningCoeff) {
 #if DEBUGID > 0
     printf("Teaching process started\n");
 #endif
@@ -19,10 +19,14 @@ void teach(Network *net, DataSource data[], int dataLen, double errorCoeff, doub
     while (curentErr > errorCoeff) {
         count++;
         curentErr = teachData(net, data[0], learningCoeff);
-        for (int i = 1; i < dataLen; i++) {
+        for (size_t i = 1; i < dataLen; i++) {
             curentErr += teachData(net, data[i], learningCoeff);
         }
         curentErr /= 4;
+        
+        if (count % 10 == 0) {
+            printf("Itération : %i\n    Current Error: %.4f\n", count, curentErr);
+        }
         
         if (count > 500000 && count % 500000 == 0) {
             warnx("The iteration number is unusually high: %i\nCurrent Error: %f\n",count, curentErr);
@@ -50,7 +54,7 @@ double teachData(Network *net, DataSource data, double alpha) {
     getNeurons(*net, net->hLayers + 1, &begin, &end);
     for (int n = begin; n <= end; n++) {
         int pos = nbOfNeuroneInLayer(*net, n);
-        error += fabs(net->A[n] - data.out[pos]);
+        error += fabs(net->A[n] - data.out[pos]);//data.response;
     }
     error /= net->out;
     

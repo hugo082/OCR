@@ -6,11 +6,24 @@
 //  Copyright © 2016 hfqt. All rights reserved.
 //
 
-#ifndef Display_h
-#define Display_h
+#ifndef NET_Display_h
+#define NET_Display_h
 
 #include <stdio.h>
 #include "Core.h"
+#include "DataSource.h"
+
+/*
+ PUBLIC
+ Affiche le résultat théorique (plus grosse probabilité)
+ */
+void printTheoricalResult(Network net, DataSource d);
+
+/*
+ PUBLIC
+ Affiche les 'count' plus grosse probabilité
+ */
+void printBestOutput(Network net, int count);
 
 /*
  PUBLIC
@@ -36,4 +49,4 @@ void printDeltas(Network net);
  **/
 void printWeight(Network net);
 
-#endif /* Display_h */
+#endif /* NET_Display_h */

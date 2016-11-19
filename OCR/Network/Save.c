@@ -167,7 +167,7 @@ char *delete_str(char *s){
 	return result;
 } 
 
-double string_to_double(char *str_, int *cIndex){
+/*double string_to_double(char *str_, int *cIndex){
     
     int startIndex = *cIndex;
     
@@ -193,7 +193,8 @@ double *string_to_tab(char *s, int l){
 		cTabIndex += 1;
 	}	
 	return tab;
-}
+} */
+
 
 Network *File_to_Network(){
 

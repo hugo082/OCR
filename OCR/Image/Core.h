@@ -6,14 +6,20 @@
 //  Copyright © 2016 hfqt. All rights reserved.
 //
 
-#ifndef Core_h
-#define Core_h
+#ifndef IMG_Core_h
+#define IMG_Core_h
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <err.h>
+
+#if __APPLE_XCODE__
+#include "SDL2/SDL.h"
+#include "SDL2_image/SDL_image.h"
+#else
 #include <SDL.h>
 #include <SDL_image.h>
+#endif
 
 /*
  PUBLIC
@@ -114,4 +120,10 @@ void recOnLetter (SDL_Surface *img, struct CPoint *pixels, int *len, int *cIndex
  **/
 void transformToBlackOrWhite(SDL_Surface *img, int sensitivity);
 
-#endif /* Core_h */
+/*
+ PUBLIC
+ Retourne les entrées pour le réseaux de neurones.
+ */
+double* load_enters(SDL_Surface *s);
+
+#endif /* IMG_Core_h */

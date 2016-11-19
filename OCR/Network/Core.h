@@ -6,8 +6,8 @@
 //  Copyright © 2016 hfqt. All rights reserved.
 //
 
-#ifndef Core_h
-#define Core_h
+#ifndef NET_Core_h
+#define NET_Core_h
 
 #include <err.h>
 #include <math.h>
@@ -109,4 +109,4 @@ double sigmoide(double x);
  **/
 double sigmoidePrime(double x);
 
-#endif /* Core_h */
+#endif /* NET_Core_h */
