@@ -21,7 +21,7 @@
 #define eOUT 26
 #define hLAYERS 1
 #define nBY_LAYER 29
-#define MIN_ERR 0.1
+#define MIN_ERR 0.7
 
 #define BW_FOLDER_PATH "/Users/hugofouquet/Epita/IMG_SRC/8x8/A-Z_OCR/BW/"
 #define POLICE_NAME "_OCR.jpg"
@@ -172,7 +172,7 @@ void load_prod_image(char *path) {
 
 void loader(char **tokens, size_t size) {
     if (size != 3 || tokens[1] == NULL || !strcmp(tokens[1],"") || tokens[2] == NULL || !strcmp(tokens[2],"")) {
-        printf("☠️  Missing argument : load -env floder\n");
+        printf("☠️  Missing argument : load -env floder\n    env : 'training' | 'prod'\n");
         return;
     }
     if (strcmp(tokens[1],"-training") == 0)
@@ -186,7 +186,7 @@ void loader(char **tokens, size_t size) {
 
 void preprocessing_image(char **tokens, size_t size) {
     if (size != 2 || tokens[1] == NULL || !strcmp(tokens[1],"")) {
-        printf("☠️  Missing argument : prepro floder\n");
+        printf("☠️  Missing argument : prepro folder\n");
         return;
     }
     int sensitivity;
@@ -273,6 +273,24 @@ void compute_prod(){
     printf("%zu data computed.\n", prod_set_count);
 }
 
+void help() {
+    printf("Commands :\n");
+    printf("  ==> 'load' : load all files in subfolder 'BW' of folder.\n");
+    printf("      > load -env floder\n");
+    printf("      where  env : 'training' | 'prod'\n");
+    printf("  ==> 'prepro' : execute pre-traitement on files in folder\n");
+    printf("      > prepro folder\n");
+    printf("  ==> 'init' : init network. All parameters will be requested afterwards.\n");
+    printf("      > init\n");
+    printf("  ==> 'teach' : start teaching of network. Env 'training' should be loaded and network initialized.\n");
+    printf("      > teach\n");
+    printf("  ==> 'compute' : compute network. Env 'prod' should be loaded and network initialized.\n");
+    printf("      > compute\n");
+    printf("  ==> 'exit' : exit shell.\n");
+    printf("      > exit\n");
+    printf("Good luck ! 😘\n");
+}
+
 // =======
 
 
@@ -294,6 +312,8 @@ int check_command(char *buffer) {
         init_network();
     } else if (strcmp(tokens[0],"compute") == 0) {
         compute_prod();
+    } else if (strcmp(tokens[0],"help") == 0) {
+        help();
     } else
         printf("Command '%s' not found. \n", buffer);
     if (tokens != NULL)
@@ -344,8 +364,8 @@ int debug_main(){
     // ----
     
     // ---- Exécution sur des données pour le tester
-    for (int i = 0; i < size; i++) {
-        DataSource d = trainingSet[i];
+    for (int _i = 0; _i < size; _i++) {
+        DataSource d = trainingSet[_i];
         compute(n, d);
         printTheoricalResult(*n, d);
     }
@@ -355,11 +375,11 @@ int debug_main(){
 
 
 int main() {
-#if DEBUG == 1
+#if DEBUG > 1
     printf("Debug Version\n");
     return debug_main();
 #endif
-    printf("Hello !\n   You can use 'load', 'prepro', 'teach', 'compute' or 'init command.\n");
+    printf("Hello !\n   You can use 'help', 'load', 'prepro', 'teach', 'compute', 'exit' or 'init' command.\n");
     init_sdl();
     char *cmd = NULL;
     do {

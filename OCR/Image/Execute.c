@@ -11,7 +11,9 @@
 
 #include "Execute.h"
 
-#define DEBUG 2
+#ifndef DEBUG
+#define DEBUG 0
+#endif
 #define CURRENT_PATH "/Users/hugofouquet/Downloads/"
 
 void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {

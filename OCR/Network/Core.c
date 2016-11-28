@@ -28,19 +28,18 @@ Network *network_new(int enters, int out, int hLayers, int nByLayer) {
     int h = enters + out + (hLayers * nByLayer);
     net->totalH = h;
     
-    int nbWeight =  enters * nByLayer + out * nByLayer + (hLayers - 1) * (nByLayer * nByLayer) ;
+    int nbWeight =  enters * nByLayer + out * nByLayer + (hLayers - 1) * (nByLayer * nByLayer);
     net->weight = malloc(sizeof(double) * nbWeight);
     net->A = malloc(sizeof(double) * h);
     net->In = malloc(sizeof(double) * h);
     net->D = malloc(sizeof(double) * h);
     
-    init_weight(net);
+    init_weight(net, nbWeight);
     
     return net;
 }
 
-void init_weight(Network *net) {
-    int nbWeight = (net->hLayers + 2) * net->nByLayer;
+void init_weight(Network *net, int nbWeight) {
     for (int i = 0; i < nbWeight; i++) {
         net->weight[i] = drand(-1, 1);
     }

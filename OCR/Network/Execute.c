@@ -8,10 +8,12 @@
 
 #include "Execute.h"
 
-#define DEBUGID 1
+#ifndef DEBUG
+#define DEBUG 0
+#endif
 
 void teach(Network *net, DataSource data[], size_t dataLen, double errorCoeff, double learningCoeff) {
-#if DEBUGID > 0
+#if DEBUG > 0
     printf("Teaching process started\n");
 #endif
     double curentErr = 1;
@@ -32,7 +34,7 @@ void teach(Network *net, DataSource data[], size_t dataLen, double errorCoeff, d
             warnx("The iteration number is unusually high: %i\nCurrent Error: %f\n",count, curentErr);
         }
     }
-#if DEBUGID > 0
+#if DEBUG > 0
     printf("Teaching process completed\n   Current Error: %f\n   Number of iterations: %i\n", curentErr, count);
 #endif
 }

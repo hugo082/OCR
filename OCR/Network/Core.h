@@ -37,7 +37,7 @@ Network *network_new(int enters, int out, int hLayers, int nByLayer);
  PRIVATE
  Initialise le tableau des poids.
  **/
-void init_weight(Network *net);
+void init_weight(Network *net, int nbWeight);
 
 /*
  PRIVATE

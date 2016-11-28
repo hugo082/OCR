@@ -11,7 +11,9 @@
 #include "Core.h"
 #include "Execute.h"
 
+#ifndef DEBUG
 #define DEBUG 0
+#endif
 
 char* getLine(int maxSize) {
     int i = 0, c = 0;
