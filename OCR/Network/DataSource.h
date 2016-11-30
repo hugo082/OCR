@@ -15,8 +15,8 @@
 #include "SDL2/SDL.h"
 #include "SDL2_image/SDL_image.h"
 #else
-#include <SDL.h>
-#include <SDL_image.h>
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
 #endif
 
 typedef struct _DataSource DataSource;

@@ -34,7 +34,7 @@ char *tab_to_string(Network net, int n);
 /*
  Sauvegarde tout les parametres dans un fichier texte
  **/
-int Network_to_File(Network net);
+void  Network_to_File(Network net);
 
 
 /*
@@ -65,7 +65,7 @@ char *delete_str(char *s);
 /*
  Retourne un reseau de neurone paramétré selon les valeurs présente dans le fichier de sauvegarde
  **/
-Network *File_to_Network();
+void File_to_Network();
 
 
 #endif
