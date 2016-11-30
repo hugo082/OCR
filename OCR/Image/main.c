@@ -31,10 +31,17 @@ int main() {
     char *path = "/Users/hugofouquet/Downloads/IMG_SRC/PERSO/TD.jpg";
 #endif
     
+    int eSize;
+    do {
+        printf("Taille de sortie : ");
+        char *err = getLine(10);
+        eSize = atof(err);
+    } while (eSize <= 0);
+    
     init_sdl();
     SDL_Surface *img = load_image(path);
     transformToBlackOrWhite(img, 380);
-    SDL_Surface *img2 = redim(img, 50, 50);
+    SDL_Surface *img2 = redim(img, eSize, eSize);
     //searchLettersWithSurface(img);
     SDL_SaveBMP(img2, "imgredim.jpg");
 
