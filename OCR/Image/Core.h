@@ -122,6 +122,13 @@ void transformToBlackOrWhite(SDL_Surface *img, int sensitivity);
 
 /*
  PUBLIC
+ Redimensionne une image.
+ hauteur est la heuteur souhaite, largeur et la largeur souhaite.
+ **/
+SDL_Surface* redim(SDL_Surface *img, int hauteur, int largeur); 
+
+/*
+ PUBLIC
  Retourne les entrées pour le réseaux de neurones.
  */
 double* load_enters(SDL_Surface *s);

@@ -253,6 +253,17 @@ void transformToBlackOrWhite(SDL_Surface *img, int sensitivity) {
     }
 }
 
+SDL_Surface* redim(SDL_Surface *img, int hauteur, int largeur){
+  SDL_Surface *output = SDL_CreateRGBSurface(0,largeur, hauteur, 32, 0, 0, 0, 0);
+  for(int i=0; i<(hauteur-1); i++){
+    for(int j=0; j<(largeur-1); j++){
+      Uint32 pix = _getPixel(img, ((i*(img->h))/hauteur),((j*(img->w))/largeur));
+      putpixel(output, i, j, pix);
+    }
+  }
+  return output;
+} 
+
 // For Network
 
 double* load_enters(SDL_Surface *s) {

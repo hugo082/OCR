@@ -33,8 +33,10 @@ int main() {
     
     init_sdl();
     SDL_Surface *img = load_image(path);
-    transformToBlackOrWhite(img, 200);
-    searchLettersWithSurface(img);
-    
+    transformToBlackOrWhite(img, 380);
+    SDL_Surface *img2 = redim(img, 50, 50);
+    //searchLettersWithSurface(img);
+    SDL_SaveBMP(img2, "imgredim.jpg");
+
     return 0;
 }
