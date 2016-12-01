@@ -85,7 +85,7 @@ int main() {
     } while (response != 'Y' && response != 'N');
     
     if (response == 'Y') {
-        //Network_to_File(*net);
+        network_to_file(*net, "file.txt");
         printf("Saved !\n");
     } else {
         printf("Ignored !\n");

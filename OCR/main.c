@@ -13,6 +13,7 @@
 #include "Network/Core.h"
 #include "Network/Execute.h"
 #include "Network/Display.h"
+#include "Network/Save.h"
 
 #include "Image/Core.h"
 #include "Image/Execute.h"
@@ -172,7 +173,7 @@ void load_prod_image(char *path) {
 
 void loader(char **tokens, size_t size) {
     if (size != 3 || tokens[1] == NULL || !strcmp(tokens[1],"") || tokens[2] == NULL || !strcmp(tokens[2],"")) {
-        printf("☠️  Missing argument : load -env floder\n    env : 'training' | 'prod'\n");
+        printf("☠️  Missing argument : load -env folder\n    env : 'training' | 'prod'\n");
         return;
     }
     if (strcmp(tokens[1],"-training") == 0)
@@ -273,11 +274,32 @@ void compute_prod(){
     printf("%zu data computed.\n", prod_set_count);
 }
 
+void saver(char **tokens, size_t size) {
+    if (size != 3 || tokens[1] == NULL || !strcmp(tokens[1],"") || tokens[2] == NULL || !strcmp(tokens[2],"")) {
+        printf("☠️  Missing argument : saver -action path\n    action : 'save' | 'load'\n");
+        return;
+    }
+    if (strcmp(tokens[1],"-save") == 0) {
+        if (net == NULL) {
+            printf("☠️  Error.\n     Network not initialized.\n");
+            return;
+        }
+        network_to_file(*net, tokens[2]);
+    } else if (strcmp(tokens[1],"-load") == 0)
+        net = file_to_network(tokens[2]);
+    else
+        printf("Env '%s' invalid. Use -save or -load \n", tokens[1]);
+    printf("Succed !\n");
+}
+
 void help() {
     printf("Commands :\n");
     printf("  ==> 'load' : load all files in subfolder 'BW' of folder.\n");
-    printf("      > load -env floder\n");
+    printf("      > load -env folder\n");
     printf("      where  env : 'training' | 'prod'\n");
+    printf("  ==> 'saver' : save or load network in file at path.\n");
+    printf("      > saver -action path\n");
+    printf("      where  action : 'save' | 'load'\n");
     printf("  ==> 'prepro' : execute pre-traitement on files in folder\n");
     printf("      > prepro folder\n");
     printf("  ==> 'init' : init network. All parameters will be requested afterwards.\n");
@@ -312,6 +334,8 @@ int check_command(char *buffer) {
         init_network();
     } else if (strcmp(tokens[0],"compute") == 0) {
         compute_prod();
+    } else if (strcmp(tokens[0],"saver") == 0) {
+        saver(tokens, size);
     } else if (strcmp(tokens[0],"help") == 0) {
         help();
     } else
@@ -379,7 +403,7 @@ int main() {
     printf("Debug Version\n");
     return debug_main();
 #endif
-    printf("Hello !\n   You can use 'help', 'load', 'prepro', 'teach', 'compute', 'exit' or 'init' command.\n");
+    printf("Hello !\n   You can use 'help', 'load', 'saver', 'prepro', 'teach', 'compute', 'exit' or 'init' command.\n");
     init_sdl();
     char *cmd = NULL;
     do {

@@ -26,9 +26,11 @@ void teach(Network *net, DataSource data[], size_t dataLen, double errorCoeff, d
         }
         curentErr /= 4;
         
+#if DEBUG > 1
         if (count % 10 == 0) {
             printf("Itération : %i\n    Current Error: %.4f\n", count, curentErr);
         }
+#endif
         
         if (count > 500000 && count % 500000 == 0) {
             warnx("The iteration number is unusually high: %i\nCurrent Error: %f\n",count, curentErr);

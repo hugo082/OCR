@@ -9,11 +9,11 @@
 #ifndef Save_h
 #define Save_h
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include "Core.h"
+#include "DataSource.h"
 
+#include <float.h>
+#include <stdlib.h>
 
 /*
  Retourne le nombre de digits de n
@@ -33,9 +33,9 @@ char *tab_to_string(Network net, int n);
 
 /*
  Sauvegarde tout les parametres dans un fichier texte
+ Retourne 0 si erreur, 1 sinon
  **/
-void  Network_to_File(Network net);
-
+int network_to_file(Network net, char *path);
 
 /*
  Retourne la valeur int d'une variable enregistré dans le fichier de 	sauvegarde. Prend une chaine de charactère en paramètre.
@@ -53,19 +53,9 @@ char *File_to_string();
 char *delete_str(char *s);
 
 /*
- String -> Double
- **/
-//double string_to_double(char *str_);
-
-/*
- String vers tableau de double
- **/
-//double *string_to_tab(char *s, int l);
-
-/*
  Retourne un reseau de neurone paramétré selon les valeurs présente dans le fichier de sauvegarde
+ NULL si une erreur est survenue.
  **/
-Network *File_to_Network();
-
+Network *file_to_network(char *path);
 
 #endif
