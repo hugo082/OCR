@@ -163,33 +163,92 @@ void Network_to_File(Network net){
 	return;
 }
 
-void File_to_Network()
+Network *File_to_Network()
 {
    static const char filename[] = "test.txt";
    FILE *file = fopen ( filename, "r" );
    if ( file != NULL )
    {
       char line [ 128 ]; /* or other suitable maximum line size */
-	//int i = 0;
+      int i = 0;
+      int S = 0;
+      int S_i = 0;
+	int enters;
+	int hLayers;
+	int nByLayer;
+	int out;
+	Network *net;
  
       while ( fgets ( line, sizeof line, file ) != NULL ) /* read a line */
-      {
+      {/*
+	if (i < 4){
+		int nbr = sscanf(line, "%d", &nbr);
+		printf("%i", nbr);
+		i += 1;
+	}
+	else{*/
+	if (i == 4){
+		net = network_new(enters, out, hLayers, nByLayer);
+	}
 	double d;
-	if( 1==sscanf(line,"%lf",&d) )
-		printf("%f\n",d);
-	else
-		puts("not a double variable\n");
+	if (i < 4){
+		int nbr;
+		sscanf(line, "%i", &nbr);
+		//printf("%i", nbr);
+		if (i == 0)
+			enters = nbr;
+		if (i == 1)
+			hLayers = nbr;
+		if (i == 2)
+			nByLayer = nbr;
+		if (i == 3)
+			out = nbr;	
+	}	
+	else if( 1==sscanf(line,"%lf",&d) ){
+		double nd;
+		sscanf(line, "%lf", &nd);
+		if (S == 0){
+			*(net->weight + S_i) = nd;
+		}
+		if (S == 1){
+                        *(net->A + S_i) = nd;
+                }
+		if (S == 2){
+                        *(net->In + S_i) = nd;
+                }
+		if (S == 3){
+                        *(net->D + S_i) = nd;
+                }
+		S_i += 1;
+
+	}
+		//printf("%f\n",d);
+	else{
+		S += 1;
+		S_i = 0;
+	}
+	i += 1;
       }
       fclose ( file );
+      return net;
    }
    else
    {
       perror ( filename ); /* why didn't the file open? */
+      return NULL;
    }
-   return;
 }
 
-int main(){
+/*void Print_tab(double *tab, int len){
+	int i = 0;
+	while (i < len){
+		printf("%lf\n", *(tab + i));
+		i += 1;
+	}
+	return;
+}*/
+
+/*int main(){
 //	EXEMPLE D'UTILISATION
     
     
@@ -215,115 +274,31 @@ int main(){
       // ----
     
       // ---- Création du réseau avec ses caractéristiques
-      Network *net = network_new(2, 1, 1, 3);
+      //Network *net = network_new(2, 1, 1, 3);
       // ----
  	    
       // ---- Apprentissage du réseau
       //teach(net, final, 4, 0.1, 0.1);
       // ----
-  /* static const char filename[] = "test_2.txt";
-   FILE *file = fopen ( filename, "w+" );
-   if ( file != NULL )
-   {
-    	int l = net->enters + net->out + (net->hLayers * net->nByLayer);
-        int i = 0;
-        double *tab = net->A;
-        char *s = malloc(sizeof(*s) * (l));
-        while (i < l){
-		double a = *(tab + i);
-                char arr[sizeof(a)];
-                sprintf(arr, "%f", a);
-                strcat(arr, "\n\r");
-                strcat(s, arr);
-		fputs(s, file);
-                i += 1;
-        }
-
-      fclose ( file );
-   }*/
-
-
 
       // ---- Enregistrement du reseau
       //Network_to_File(*net);
       // ----
 	
-      File_to_Network();
+      Network *net = File_to_Network();
+      printf("%i\n", net->enters);
+      printf("%i\n", net->hLayers);
+      printf("%i\n", net->nByLayer);
+      printf("%i\n", net->out);
+      int h = net->enters + net->out + (net->hLayers * net->nByLayer);
+      int nbWeight =  net->enters * net->nByLayer + net->out * net->nByLayer + (net->hLayers - 1) * (net->nByLayer * net->nByLayer);
+      printf("%s\n", "weight :");
+      Print_tab(net->weight, nbWeight);
+      printf("%s\n", "A :");
+      Print_tab(net->A, h);
+      printf("%s\n", "In :");
+      Print_tab(net->In, h);
+      printf("%s\n", "D :");
+      Print_tab(net->D, h);
       return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//int main(){
-//
-//	 
-//    // EXEMPLE D'UTILISATION
-//    
-//    
-//    // ---- Création des données sources
-//    double enters[2] = {1,1};
-//    double out[1] = {0};
-//    DataSource *data = data_new(enters, out, 2, 2, 0);
-//    double enters2[2] = {1,0};
-//    double out2[1] = {1};
-//    DataSource *data2 = data_new(enters2, out2, 2, 2, 1);
-//    double enters3[2] = {0,1};
-//    double out3[1] = {1};
-//    DataSource *data3 = data_new(enters3, out3, 2, 2, 1);
-//    double enters4[2] = {0,0};
-//    double out4[1] = {0};
-//    DataSource *data4 = data_new(enters4, out4, 2, 2, 0);
-//    
-//    DataSource *final = malloc(sizeof(DataSource) * 4);
-//    final[0] = *data;
-//    final[1] = *data2;
-//    final[2] = *data3;
-//    final[3] = *data4;
-//    // ----
-//    
-//    // ---- Création du réseau avec ses caractéristiques
-//    Network *net = network_new(2, 1, 1, 3);
-//    // ----
-//	    
-//    // ---- Apprentissage du réseau
-//    teach(net, final, 4, 0.1, 0.1);
-//    // ----
-//	
-//    // ---- Enregistrement du reseau
-//    Network_to_File(*net);
-//    // ----
-//
-//    
-//    // ---- Exécution sur des données pour le tester
-//    /*compute(net, *data);
-//    printResult(*net);
-//    compute(net, *data2);
-//    printResult(*net);
-//    compute(net, *data3);
-//    printResult(*net);
-//    compute(net, *data4);
-//    printResult(*net);*/
-//    // ----
-//	
-//	//Network *z = File_to_Network();
-//	return 0;
-//}
-
+}*/

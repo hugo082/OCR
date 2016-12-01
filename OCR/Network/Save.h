@@ -65,7 +65,7 @@ char *delete_str(char *s);
 /*
  Retourne un reseau de neurone paramétré selon les valeurs présente dans le fichier de sauvegarde
  **/
-void File_to_Network();
+Network *File_to_Network();
 
 
 #endif
