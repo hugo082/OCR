@@ -72,4 +72,9 @@ void move_table(struct paire **tab, int begin, size_t end);
  **/
 int isInPrecision(int value, int reference);
 
+/*
+ Display table.
+ **/
+void table_print(struct table *table);
+
 #endif /* ImgTable_h */

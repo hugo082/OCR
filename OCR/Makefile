@@ -8,7 +8,7 @@ IMG_DIR= Image
 
 # Sources
 COMMON_NET_SRCS= $(NET_DIR)/Core.c $(NET_DIR)/Execute.c $(NET_DIR)/DataSource.c $(NET_DIR)/Display.c $(NET_DIR)/Save.c
-COMMON_IMG_SRCS= $(IMG_DIR)/Core.c $(IMG_DIR)/Execute.c
+COMMON_IMG_SRCS= $(IMG_DIR)/Core.c $(IMG_DIR)/Execute.c $(IMG_DIR)/ImgTable.c
 
 IMG_MAIN= $(IMG_DIR)/main.c
 IMG_SRCS= $(COMMON_IMG_SRCS) $(IMG_MAIN)

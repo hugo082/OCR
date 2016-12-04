@@ -10,8 +10,7 @@
 
 #define PRECISION 10
 
-/*
-void print(struct table *table) {
+void table_print(struct table *table) {
     printf("TAB : %zu / %zu\n", table->size, table->capacity);
     for (size_t i = 0; i < table->capacity; i++) {
         printf("   %02zu|", i);
@@ -22,7 +21,7 @@ void print(struct table *table) {
         }
         printf("_\n");
     }
-}*/
+}
 
 void new_tab(struct table *table) {
     table->size = 0;

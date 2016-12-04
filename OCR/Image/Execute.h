@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "Core.h"
+#include "ImgTable.h"
 
 #if __APPLE_XCODE__
 #include "SDL2/SDL.h"
@@ -23,14 +24,14 @@
  Cherche les lettres dans une image.
  Prends le chemin de l'image.
  **/
-void searchLettersWithPath(char *path);
+void searchLettersWithPath(char *path, struct table *table);
 
 /*
  PUBLIC
  Cherche les lettres dans une image.
  Prends la surface.
  **/
-void searchLettersWithSurface(SDL_Surface *img);
+void searchLettersWithSurface(SDL_Surface *img, struct table *table);
 
 /*
  PUBLIC

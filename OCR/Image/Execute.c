@@ -11,10 +11,17 @@
 
 #include "Execute.h"
 
+#if __APPLE__
+#define CURRENT_PATH "/Users/hugofouquet/Epita/IMG_SRC/"
+#elif __linux__
+#define CURRENT_PATH "/home/nubel_r/afs/bourgh_s/OCR/"
+#elif _WIN32
+#define CURRENT_PATH "/Path/For/Windows"
+#endif
+
 #ifndef DEBUG
 #define DEBUG 0
 #endif
-#define CURRENT_PATH "/Users/hugofouquet/Epita/IMG_SRC/"
 
 void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
     SDL_Surface *dst = malloc(sizeof(SDL_Surface));
@@ -40,18 +47,20 @@ void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
     strcat(path, "_");
     strcat(path, y);
     strcat(path, name);
+#if DEBUG > 2
     printf("Save with name : %s\n", path);
+#endif
     SDL_SaveBMP(dst, path);
     free(path);
 }
 
-void searchLettersWithPath(char *path) {
+void searchLettersWithPath(char *path, struct table *table) {
     init_sdl();
     SDL_Surface *img = load_image(path);
-    searchLettersWithSurface(img);
+    searchLettersWithSurface(img, table);
 }
 
-void searchLettersWithSurface(SDL_Surface *img) {
+void searchLettersWithSurface(SDL_Surface *img, struct table *table) {
     init_sdl();
 #if DEBUG > 0
     printf("Searching...\n");
@@ -88,15 +97,15 @@ void searchLettersWithSurface(SDL_Surface *img) {
                 rects = realloc(rects, sizeof(int) * 4 * len);
                 *(rects + lettersI) = cRect;
                 char *name = malloc(sizeof(char) * 15);
-                sprintf(name, "Letter_%i.bmp", lettersI);
+                sprintf(name, "L_%i.bmp", lettersI);
                 extractSurface(img, cRect, name);
                 lettersI++;
+                insert_paire(table, img, cRect, name);
                 
 #if DEBUG > 1
                 encadrer(img, cRect);
-                //printf("Letter %i founded\n", lettersI);
 #endif
-#if DEBUG > 2
+#if DEBUG > 3
                 char *foundedPath = malloc(sizeof(char) * 200);
                 strcpy(foundedPath, CURRENT_PATH);
                 strcat(foundedPath, "founded_tmp.bmp");

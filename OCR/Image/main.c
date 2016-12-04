@@ -10,6 +10,21 @@
 #include <stdlib.h>
 #include "Core.h"
 #include "Execute.h"
+#include "ImgTable.h"
+
+#if __APPLE__
+#define PATH "/Users/hugofouquet/EPITA/IMG_SRC/img_text.jpg"
+#else
+#define PATH "/home/nubel_r/afs/bourgh_s/OCR/"
+#endif
+
+#if __APPLE__
+#define PATH "/Users/hugofouquet/EPITA/IMG_SRC/img_text.jpg"
+#elif __linux__
+#define PATH "~/afs/bourgh_s/OCR/image.jpg"
+#elif _WIN32
+#define PATH "/Path/For/Windows/img.jpg"
+#endif
 
 #ifndef DEBUG
 #define DEBUG 0
@@ -28,8 +43,10 @@ int main() {
     printf("Path : ");
     char *path = getLine(100);
 #else
-    char *path = "/Users/hugofouquet/EPITA/IMG_SRC/img_text.jpg";
+    char *path = PATH;
 #endif
+    
+    struct table *table = init_table(10);
     
 //    int eSize;
 //    do {
@@ -42,8 +59,12 @@ int main() {
     SDL_Surface *img = load_image(path);
     transformToBlackOrWhite(img, 380);
     //SDL_Surface *img2 = redim(img, eSize, eSize);
-    searchLettersWithSurface(img);
+    searchLettersWithSurface(img, table);
     SDL_SaveBMP(img, "img_final.jpg");
 
+#if DEBUG > 1
+    table_print(table);
+#endif
+    
     return 0;
 }
