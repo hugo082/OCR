@@ -14,7 +14,7 @@
 #if __APPLE__
 #define CURRENT_PATH "/Users/hugofouquet/Epita/IMG_SRC/"
 #elif __linux__
-#define CURRENT_PATH "/home/nubel_r/afs/bourgh_s/OCR/"
+#define CURRENT_PATH "~/afs/bourgh_s/OCR/"
 #elif _WIN32
 #define CURRENT_PATH "/Path/For/Windows"
 #endif
