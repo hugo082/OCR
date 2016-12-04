@@ -14,7 +14,7 @@
 #ifndef DEBUG
 #define DEBUG 0
 #endif
-#define CURRENT_PATH "/Users/hugofouquet/Downloads/"
+#define CURRENT_PATH "/Users/hugofouquet/Epita/IMG_SRC/"
 
 void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
     SDL_Surface *dst = malloc(sizeof(SDL_Surface));
@@ -31,7 +31,16 @@ void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
     char *path = malloc(sizeof(char) * 200);
     strcpy(path, CURRENT_PATH);
     strcat(path, "Results/");
+    
+    char *x = malloc(sizeof(char) * 4), *y = malloc(sizeof(char) * 4);
+    sprintf(x, "%i", rect.x);
+    sprintf(y, "%i", rect.y);
+    
+    strcat(path, x);
+    strcat(path, "_");
+    strcat(path, y);
     strcat(path, name);
+    printf("Save with name : %s\n", path);
     SDL_SaveBMP(dst, path);
     free(path);
 }
@@ -93,7 +102,7 @@ void searchLettersWithSurface(SDL_Surface *img) {
                 strcat(foundedPath, "founded_tmp.bmp");
                 SDL_SaveBMP(img, foundedPath);
                 free(foundedPath);
-                getchar();
+                //getchar();
 #endif
                 free(pixels);
                 free(name);

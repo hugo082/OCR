@@ -346,6 +346,28 @@ int check_command(char *buffer) {
     return 1;
 }
 
+void print_net(Network net) {
+    int len = net.enters + net.out + (net.hLayers * net.nByLayer);
+    int wLen =  net.enters * net.nByLayer + net.out * net.nByLayer + (net.hLayers - 1) * (net.nByLayer * net.nByLayer);
+    printf("E : %i, O : %i, hLayer : %i, nByLayer : %i\n\n", net.enters, net.out, net.hLayers, net.nByLayer);
+    printf("A : [ ");
+    for (int i = 0; i < len; i++) {
+        printf("%f - ", net.A[i]);
+    }
+    printf(" ]\n\n");
+    printf("In : [ ");
+    for (int i = 0; i < len; i++) {
+        printf("%f - ", net.In[i]);
+    }
+    printf(" ]\n\n");
+    printf("Weight : [ ");
+    for (int i = 0; i < 20; i++) {
+        printf("%f - ", net.weight[i]);
+    }
+    printf(" ]\n\n");
+}
+
+
 int debug_main(){
     init_sdl();
     int size = 'Z' - 'A';
@@ -387,12 +409,22 @@ int debug_main(){
     teach(n, trainingSet, size, MIN_ERR, 0.1);
     // ----
     
+    print_net(*n);
+    network_to_file(*n, "file.txt");
+    printf("Network Saved !\n");
+    
+    n = file_to_network("file.txt");
+    printf("Network loaded !\n");
+    print_net(*n);
+    
+    
+    
     // ---- Exécution sur des données pour le tester
-    for (int _i = 0; _i < size; _i++) {
-        DataSource d = trainingSet[_i];
-        compute(n, d);
-        printTheoricalResult(*n, d);
-    }
+//    for (int _i = 0; _i < size; _i++) {
+//        DataSource d = trainingSet[_i];
+//        compute(n, d);
+//        printTheoricalResult(*n, d);
+//    }
     // ----
     return 0;
 }

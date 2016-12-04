@@ -28,22 +28,22 @@ int main() {
     printf("Path : ");
     char *path = getLine(100);
 #else
-    char *path = "/Users/hugofouquet/Downloads/IMG_SRC/PERSO/TD.jpg";
+    char *path = "/Users/hugofouquet/EPITA/IMG_SRC/img_text.jpg";
 #endif
     
-    int eSize;
-    do {
-        printf("Taille de sortie : ");
-        char *err = getLine(10);
-        eSize = atof(err);
-    } while (eSize <= 0);
+//    int eSize;
+//    do {
+//        printf("Taille de sortie : ");
+//        char *err = getLine(10);
+//        eSize = atof(err);
+//    } while (eSize <= 0);
     
     init_sdl();
     SDL_Surface *img = load_image(path);
     transformToBlackOrWhite(img, 380);
-    SDL_Surface *img2 = redim(img, eSize, eSize);
-    //searchLettersWithSurface(img);
-    SDL_SaveBMP(img2, "imgredim.jpg");
+    //SDL_Surface *img2 = redim(img, eSize, eSize);
+    searchLettersWithSurface(img);
+    SDL_SaveBMP(img, "img_final.jpg");
 
     return 0;
 }

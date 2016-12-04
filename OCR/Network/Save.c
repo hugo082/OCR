@@ -47,7 +47,7 @@ void doubleToString(char* str, long double nbr, unsigned int size, unsigned int 
     *str = 0;
 }
 
-double *choose_tab(Network net, int l){
+double* choose_tab(Network net, int l){
     if (l == 0)
         return net.weight;
     if (l == 1)
@@ -66,17 +66,14 @@ char *tab_to_string(Network net, int n){
         l = net.enters + net.out + (net.hLayers * net.nByLayer);
     }
     
-    int i = 0;
     double *tab = choose_tab(net, n);
     char *s = malloc(sizeof(char) * l * 500);
-    while (i < l){
-        double a = *tab;
+    
+    for (int i = 0; i < l; i++) {
         char arr[500];
-        sprintf(arr, "%f", a);
+        sprintf(arr, "%lf", tab[i]);
         strcat(s, arr);
         strcat(s, "\n");
-        i += 1;
-        tab += 1;
     }
     return s;
 }
@@ -146,13 +143,17 @@ Network *file_to_network(char *path) {
                     nByLayer = nbr;
                 if (i == 3)
                     out = nbr;
-            } else if(i > 3 && 1 == sscanf(line,"%lf",&d)) {
+            } else if(1 == sscanf(line,"%lf",&d) && strcmp(line, "S") == 0) {
+                if (d == 0)
+                    printf("ornot - %i\n", S);
                 if (S == 0)
                     net->weight[S_i] = d;
                 else if (S == 1)
                     net->A[S_i]  = d;
                 else if (S == 2)
                     net->In[S_i]  = d;
+                else
+                    warnx("Error S");
                 S_i += 1;
             } else {
                 S++; S_i = 0;
