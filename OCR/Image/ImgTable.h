@@ -18,16 +18,16 @@
 #include <SDL.h>
 #endif
 
-struct pair {
+struct paire {
     SDL_Rect rect;
     char *name;
     SDL_Surface *img;
-    struct pair *next;
+    struct paire *next;
 };
 
 struct table {
     size_t                size, capacity;
-    struct pair         **tab;
+    struct paire         **tab;
 };
 
 /*
@@ -36,8 +36,40 @@ struct table {
 struct table* init_table(size_t capacity);
 
 /*
- Insert an image in table.
+ Return a new paire.
  **/
-int insert_pair(struct table *table, SDL_Surface *img, SDL_Rect rect);
+struct paire* create_pair(SDL_Surface *img, SDL_Rect rect, char *name);
+
+/*
+ Insert an image in table 2D.
+ **/
+void insert_paire(struct table *table, SDL_Surface *img, SDL_Rect rect, char *name);
+
+/*
+ Insert an image in table 1D at index.
+ **/
+void sub_insert_paire(struct table *table, int index, struct paire *paire);
+
+/*
+ Init tab of table.
+ **/
+void new_tab(struct table *table);
+
+/*
+ Realloc memory of tab of table. (x2)
+ **/
+void realloc_tab(struct table *table);
+
+/*
+ Move all elements at right.
+ **/
+void move_table(struct paire **tab, int begin, size_t end);
+
+/*
+ -1 si value est inférieur à l'intervalle de precision de reference
+ 0 si value est dans à l'intervalle de precision de reference
+ 1 si value est supérieur à l'intervalle de precision de reference
+ **/
+int isInPrecision(int value, int reference);
 
 #endif /* ImgTable_h */
