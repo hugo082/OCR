@@ -5,7 +5,7 @@ CC=gcc
 # Directories
 NET_DIR= Network
 IMG_DIR= Image
-INT_DIR= Interface/src
+INT_DIR= Interface
 
 # Sources
 COMMON_NET_SRCS= $(NET_DIR)/Core.c $(NET_DIR)/Execute.c $(NET_DIR)/DataSource.c $(NET_DIR)/Display.c $(NET_DIR)/Save.c
@@ -17,7 +17,7 @@ IMG_SRCS= $(COMMON_IMG_SRCS) $(IMG_MAIN)
 NET_MAIN= $(NET_DIR)/main.c
 NET_SRCS= $(COMMON_NET_SRCS) $(NET_MAIN)
 
-INT_MAIN= $(INT_DIR)/main.c
+INT_MAIN= main_inter.c
 INT_SRCS= $(COMMON_NET_SRCS) $(COMMON_IMG_SRCS) $(INT_MAIN)
 
 LDLIBS= `pkg-config --libs sdl` -lSDL_image
