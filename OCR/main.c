@@ -522,7 +522,7 @@ int debug_main_2() {
     
     init_network();
     
-    load_train_image("/Users/hugofouquet/Epita/IMG_SRC/test/");
+    load_train_image("/Users/hugofouquet/Epita/project/jeu_img/train");
     start_teaching();
     get_text();
     return 0;
