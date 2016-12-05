@@ -18,6 +18,9 @@
 #include <SDL.h>
 #endif
 
+#define PRECISION 20
+#define SAPCE_PRECISION 5
+
 struct paire {
     SDL_Rect rect;
     char *name;

@@ -23,7 +23,7 @@
 #define DEBUG 0
 #endif
 
-void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
+SDL_Surface* extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
     SDL_Surface *dst = malloc(sizeof(SDL_Surface));
     SDL_Rect dstrect;
     dstrect.x = 0;
@@ -44,6 +44,7 @@ void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
 #endif
     SDL_SaveBMP(dst, path);
     free(path);
+    return dst;
 }
 
 void searchLettersWithPath(char *path, struct table *table) {
@@ -94,9 +95,9 @@ void searchLettersWithSurface(SDL_Surface *img, struct table *table) {
                 *(rects + lettersI) = cRect;
                 char *name = malloc(sizeof(char) * 15);
                 sprintf(name, "L_%i.bmp", lettersI);
-                extractSurface(img, cRect, name);
+                SDL_Surface *dst = extractSurface(img, cRect, name);
                 lettersI++;
-                insert_paire(table, img, cRect, name);
+                insert_paire(table, dst, cRect, name);
                 
 #if DEBUG > 1
                 encadrer(img, cRect);

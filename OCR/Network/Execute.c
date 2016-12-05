@@ -13,9 +13,7 @@
 #endif
 
 void teach(Network *net, DataSource data[], size_t dataLen, double errorCoeff, double learningCoeff) {
-#if DEBUG > 0
     printf("Teaching process started\n");
-#endif
     double curentErr = 1;
     int count = 0;
     while (curentErr > errorCoeff) {
@@ -36,9 +34,7 @@ void teach(Network *net, DataSource data[], size_t dataLen, double errorCoeff, d
             warnx("The iteration number is unusually high: %i\nCurrent Error: %f\n",count, curentErr);
         }
     }
-#if DEBUG > 0
     printf("Teaching process completed\n   Current Error: %f\n   Number of iterations: %i\n", curentErr, count);
-#endif
 }
 
 void compute(Network *net, DataSource data) {

@@ -8,8 +8,6 @@
 
 #include "ImgTable.h"
 
-#define PRECISION 10
-
 void table_print(struct table *table) {
     printf("TAB : %zu / %zu\n", table->size, table->capacity);
     for (size_t i = 0; i < table->capacity; i++) {

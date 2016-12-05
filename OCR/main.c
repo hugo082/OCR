@@ -128,9 +128,8 @@ SDL_Surface* image_path_to_surface(char *path, char *name) {
     return s;
 }
 
-DataSource* image_path_to_datasource(char *path, char *name) {
+DataSource* surface_to_datasource(SDL_Surface *s, char *name) {
     char c = name[0];
-    SDL_Surface *s = image_path_to_surface(path, name);
     if (s == NULL)
         return NULL;
     double *enters = load_enters(s);
@@ -143,6 +142,11 @@ DataSource* image_path_to_datasource(char *path, char *name) {
     d->identifier = name;
     d->suface = s;
     return d;
+}
+
+DataSource* image_path_to_datasource(char *path, char *name) {
+    SDL_Surface *s = image_path_to_surface(path, name);
+    return surface_to_datasource(s, name);
 }
 
 void load_train_image(char *path) {
@@ -322,6 +326,36 @@ void bw_image(char **tokens, size_t size) {
     printf("Finished.\n");
 }
 
+void get_text(){
+    if (letterTable == NULL && net != NULL) {
+        printf("☠️  You must search letter in image before and initialize network. See 'help'.\n");
+        return;
+    }
+    char *result = malloc(sizeof(char) * letterTable->size * 50);
+    size_t char_i = 0;
+    SDL_Rect last_rect;
+    for (size_t i = 0; i < letterTable->capacity; i++) {
+        struct paire *buff = (letterTable->tab)[i];
+        if (buff != NULL)
+            last_rect = buff->rect;
+        while (buff != NULL) {
+            DataSource *d = surface_to_datasource(buff->img, buff->name);
+            if (last_rect.x + last_rect.w + SAPCE_PRECISION < buff->rect.x) {
+                result[char_i] = ' ';
+                char_i++;
+            }
+            compute(net, *d);
+            result[char_i] = get_result(*net);
+            last_rect = buff->rect;
+            buff = buff->next;
+            char_i++;
+        }
+        result[char_i] = '\n';
+        char_i++;
+    }
+    printf("Result :\n%s", result);
+}
+
 void help() {
     printf("Commands :\n");
     printf("  ==> 'load' : load all files in folder.\n");
@@ -342,6 +376,8 @@ void help() {
     printf("      > teach\n");
     printf("  ==> 'compute' : compute network. Env 'prod' should be loaded and network initialized.\n");
     printf("      > compute\n");
+    printf("  ==> 'get_text' : return text in image of search. 'search' must be executed before and network initialized.\n");
+    printf("      > get_text\n");
     printf("  ==> 'exit' : exit shell.\n");
     printf("      > exit\n");
     printf("Good luck ! 😘\n");
@@ -368,6 +404,8 @@ int check_command(char *buffer) {
         init_network();
     } else if (strcmp(tokens[0],"compute") == 0) {
         compute_prod();
+    } else if (strcmp(tokens[0],"get_text") == 0) {
+        get_text();
     } else if (strcmp(tokens[0],"saver") == 0) {
         saver(tokens, size);
     } else if (strcmp(tokens[0],"search") == 0) {
@@ -386,7 +424,7 @@ int check_command(char *buffer) {
 
 void print_net(Network net) {
     int len = net.enters + net.out + (net.hLayers * net.nByLayer);
-    int wLen =  net.enters * net.nByLayer + net.out * net.nByLayer + (net.hLayers - 1) * (net.nByLayer * net.nByLayer);
+    //int wLen =  net.enters * net.nByLayer + net.out * net.nByLayer + (net.hLayers - 1) * (net.nByLayer * net.nByLayer);
     printf("E : %i, O : %i, hLayer : %i, nByLayer : %i\n\n", net.enters, net.out, net.hLayers, net.nByLayer);
     printf("A : [ ");
     for (int i = 0; i < len; i++) {
@@ -467,6 +505,20 @@ int debug_main(){
     return 0;
 }
 
+
+int debug_main_2() {
+    char **tokens = malloc(sizeof(char *) * 2);
+    tokens[0] = "search";
+    tokens[1] = "/Users/hugofouquet/Epita/IMG_SRC/img_text.jpg";
+    search_letter(tokens, 2);
+    
+    init_network();
+    
+    load_train_image("/Users/hugofouquet/Epita/IMG_SRC/test");
+    start_teaching();
+    
+    return 0;
+}
 
 int main() {
 #if DEBUG > 1
