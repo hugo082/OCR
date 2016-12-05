@@ -81,6 +81,16 @@ double teachData(Network *net, DataSource data, double alpha) {
             }
         }
     }
-    
     return error;
+}
+
+char get_result(Network net) {
+    int begin, end, buff_index;
+    getNeurons(net, net.hLayers + 1, &begin, &end);
+    buff_index = begin;
+    for (int i = begin + 1; i <= end; i++) {
+        if (net.A[buff_index] < net.A[i])
+            buff_index = i;
+    }
+    return (char)(buff_index - begin + 'A');
 }

@@ -35,4 +35,9 @@ void compute(Network *net, DataSource data);
  **/
 double teachData(Network *net, DataSource data, double alpha);
 
+/*
+ Retourn the result of network computed.
+ **/
+char get_result(Network net);
+
 #endif /* NET_Execute_h */

@@ -207,7 +207,7 @@ void preprocessing_image(char **tokens, size_t size) {
         if (s != NULL) {
             count++;
             transformToBlackOrWhite(s, sensitivity);
-            s = redim(s, 12, 12);
+            //s = redim(s, 12, 12);
             char *dest = malloc(sizeof(char) * path_len + 50);
             strcpy(dest, path);
             strcat(dest, "BW/");
@@ -302,7 +302,24 @@ void search_letter(char **tokens, size_t size) {
     }
     letterTable = init_table(5);
     searchLettersWithPath(tokens[1], letterTable);
-    printf("Succeed !\n");
+}
+void bw_image(char **tokens, size_t size) {
+    if (size != 2 || tokens[1] == NULL || !strcmp(tokens[1],"")) {
+        printf("☠️  Missing argument : bw path\n");
+        return;
+    }
+    int sensitivity;
+    do {
+        printf("Sensitivity (650): ");
+        char *sty = getLine(5);
+        sensitivity = atof(sty);
+    } while (sensitivity <= 0);
+    SDL_Surface *img = load_image(tokens[1]);
+    if (img != NULL) {
+        transformToBlackOrWhite(img, sensitivity);
+        SDL_SaveBMP(img, tokens[1]);
+    }
+    printf("Finished.\n");
 }
 
 void help() {
@@ -317,6 +334,8 @@ void help() {
     printf("      > prepro folder\n");
     printf("  ==> 'search' : search letters in image at path 'path' and save results in folder Results/\n");
     printf("      > search path\n");
+    printf("  ==> 'bw' : transform to black and white image at path 'path'\n");
+    printf("      > bw path\n");
     printf("  ==> 'init' : init network. All parameters will be requested afterwards.\n");
     printf("      > init\n");
     printf("  ==> 'teach' : start teaching of network. Env 'training' should be loaded and network initialized.\n");
@@ -353,6 +372,8 @@ int check_command(char *buffer) {
         saver(tokens, size);
     } else if (strcmp(tokens[0],"search") == 0) {
         search_letter(tokens, size);
+    } else if (strcmp(tokens[0],"bw") == 0) {
+        bw_image(tokens, size);
     } else if (strcmp(tokens[0],"help") == 0) {
         help();
     } else

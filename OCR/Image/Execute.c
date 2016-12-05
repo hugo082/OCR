@@ -37,15 +37,7 @@ void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
         errx(55, "SDL_BlitSurface failed: %s\n", SDL_GetError());
     char *path = malloc(sizeof(char) * 200);
     //strcpy(path, CURRENT_PATH);
-    strcpy(path, "Results/");
-    
-    char *x = malloc(sizeof(char) * 4), *y = malloc(sizeof(char) * 4);
-    sprintf(x, "%i", rect.x);
-    sprintf(y, "%i", rect.y);
-    
-    strcat(path, x);
-    strcat(path, "_");
-    strcat(path, y);
+    strcpy(path, "Results/nb_");
     strcat(path, name);
 #if DEBUG > 2
     printf("Save with name : %s\n", path);

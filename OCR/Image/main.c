@@ -14,12 +14,6 @@
 
 #if __APPLE__
 #define PATH "/Users/hugofouquet/EPITA/IMG_SRC/img_text.jpg"
-#else
-#define PATH "/home/nubel_r/afs/bourgh_s/OCR/"
-#endif
-
-#if __APPLE__
-#define PATH "/Users/hugofouquet/EPITA/IMG_SRC/img_text.jpg"
 #elif __linux__
 #define PATH "~/afs/bourgh_s/OCR/image.jpg"
 #elif _WIN32
