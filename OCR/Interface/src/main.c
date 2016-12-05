@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
     builder = gtk_builder_new();
 
-    gtk_builder_add_from_file (builder, "glade/window_main.glade", NULL);
+    gtk_builder_add_from_file (builder, "Interface/glade/window_main.glade", NULL);
 
  
 
