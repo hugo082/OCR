@@ -17,8 +17,9 @@
 
 #include "Image/Core.h"
 #include "Image/Execute.h"
+#include "Image/ImgTable.h"
 
-#define eSIZE 8 * 8
+#define eSIZE 12 * 12
 #define eOUT 26
 #define hLAYERS 1
 #define nBY_LAYER 29
@@ -33,6 +34,7 @@ DataSource *trainingSet;
 size_t taining_set_count = 0;
 DataSource *productionSet;
 size_t prod_set_count = 0;
+struct table *letterTable = NULL;
 
 char* getLine(int maxSize) {
     int i = 0, c = 0;
@@ -205,6 +207,7 @@ void preprocessing_image(char **tokens, size_t size) {
         if (s != NULL) {
             count++;
             transformToBlackOrWhite(s, sensitivity);
+            s = redim(s, 12, 12);
             char *dest = malloc(sizeof(char) * path_len + 50);
             strcpy(dest, path);
             strcat(dest, "BW/");
@@ -289,12 +292,22 @@ void saver(char **tokens, size_t size) {
         net = file_to_network(tokens[2]);
     else
         printf("Env '%s' invalid. Use -save or -load \n", tokens[1]);
-    printf("Succed !\n");
+    printf("Succeed !\n");
+}
+
+void search_letter(char **tokens, size_t size) {
+    if (size != 2 || tokens[1] == NULL || !strcmp(tokens[1],"")) {
+        printf("☠️  Missing argument : search path\n");
+        return;
+    }
+    letterTable = init_table(5);
+    searchLettersWithPath(tokens[1], letterTable);
+    printf("Succeed !\n");
 }
 
 void help() {
     printf("Commands :\n");
-    printf("  ==> 'load' : load all files in subfolder 'BW' of folder.\n");
+    printf("  ==> 'load' : load all files in folder.\n");
     printf("      > load -env folder\n");
     printf("      where  env : 'training' | 'prod'\n");
     printf("  ==> 'saver' : save or load network in file at path.\n");
@@ -302,6 +315,8 @@ void help() {
     printf("      where  action : 'save' | 'load'\n");
     printf("  ==> 'prepro' : execute pre-traitement on files in folder\n");
     printf("      > prepro folder\n");
+    printf("  ==> 'search' : search letters in image at path 'path' and save results in folder Results/\n");
+    printf("      > search path\n");
     printf("  ==> 'init' : init network. All parameters will be requested afterwards.\n");
     printf("      > init\n");
     printf("  ==> 'teach' : start teaching of network. Env 'training' should be loaded and network initialized.\n");
@@ -336,6 +351,8 @@ int check_command(char *buffer) {
         compute_prod();
     } else if (strcmp(tokens[0],"saver") == 0) {
         saver(tokens, size);
+    } else if (strcmp(tokens[0],"search") == 0) {
+        search_letter(tokens, size);
     } else if (strcmp(tokens[0],"help") == 0) {
         help();
     } else

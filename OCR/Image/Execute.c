@@ -36,8 +36,8 @@ void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
     if (dst == NULL)
         errx(55, "SDL_BlitSurface failed: %s\n", SDL_GetError());
     char *path = malloc(sizeof(char) * 200);
-    strcpy(path, CURRENT_PATH);
-    strcat(path, "Results/");
+    //strcpy(path, CURRENT_PATH);
+    strcpy(path, "Results/");
     
     char *x = malloc(sizeof(char) * 4), *y = malloc(sizeof(char) * 4);
     sprintf(x, "%i", rect.x);
@@ -57,14 +57,18 @@ void extractSurface(SDL_Surface *src, SDL_Rect rect, char *name) {
 void searchLettersWithPath(char *path, struct table *table) {
     init_sdl();
     SDL_Surface *img = load_image(path);
-    searchLettersWithSurface(img, table);
+    if (img != NULL)
+        searchLettersWithSurface(img, table);
+    else {
+        printf("Error on load image at path : '%s'\n", path);
+        return;
+    }
 }
 
 void searchLettersWithSurface(SDL_Surface *img, struct table *table) {
     init_sdl();
-#if DEBUG > 0
+    mkdir("Results/", 0777);
     printf("Searching...\n");
-#endif
     
     int len = 0;
     int lettersI = 0;
@@ -118,14 +122,14 @@ void searchLettersWithSurface(SDL_Surface *img, struct table *table) {
             }
         }
     }
+#if DEBUG > 1
     char *foundedPath = malloc(sizeof(char) * 200);
     //strcpy(foundedPath, CURRENT_PATH);
     strcat(foundedPath, "founded.bmp");
     SDL_SaveBMP(img, foundedPath);
     free(foundedPath);
-#if DEBUG > 0
-    printf("Finish. %i letters founded.\n", lettersI);
 #endif
+    printf("Finish. %i letters founded.\n", lettersI);
 }
 
 //void transformToBlackAndWhite(SDL_Surface *img) {

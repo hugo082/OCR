@@ -10,6 +10,8 @@
 #define IMG_Execute_h
 
 #include <stdio.h>
+#include <dirent.h>
+#include <sys/stat.h>
 #include "Core.h"
 #include "ImgTable.h"
 
