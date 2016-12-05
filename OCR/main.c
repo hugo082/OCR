@@ -225,30 +225,38 @@ void preprocessing_image(char **tokens, size_t size) {
 }
 
 void init_network(){
-    int eSize;
+    int eSize = 8;
+#if DEBUG < 2
     do {
         printf("Taille de l'image (largeur ou hauteur) (8) : ");
         char *err = getLine(10);
         eSize = atof(err);
     } while (eSize <= 0);
-    int eOut;
+#endif
+    int eOut = 26;
+#if DEBUG < 2
     do {
         printf("Nombre de cas (26): ");
         char *err = getLine(10);
         eOut = atof(err);
     } while (eOut <= 0);
-    int hLayers;
+#endif
+    int hLayers = 1;
+#if DEBUG < 2
     do {
         printf("Couches cachées (1) : ");
         char *err = getLine(10);
         hLayers = atof(err);
     } while (hLayers <= 0);
-    int nByLayer;
+#endif
+    int nByLayer = 29;
+#if DEBUG < 2
     do {
         printf("Neurones par couche (29) : ");
         char *err = getLine(10);
         nByLayer = atof(err);
     } while (nByLayer <= 0);
+#endif
     net = network_new(eSize * eSize, eOut, hLayers, nByLayer);
     printf("Réseau créé !\n");
 }
@@ -340,10 +348,10 @@ void get_text(){
             last_rect = buff->rect;
         while (buff != NULL) {
             DataSource *d = surface_to_datasource(buff->img, buff->name);
-            if (last_rect.x + last_rect.w + SAPCE_PRECISION < buff->rect.x) {
-                result[char_i] = ' ';
-                char_i++;
-            }
+//            if (last_rect.x + last_rect.w + SAPCE_PRECISION < buff->rect.x) {
+//                result[char_i] = ' ';
+//                char_i++;
+//            }
             compute(net, *d);
             result[char_i] = get_result(*net);
             last_rect = buff->rect;
@@ -514,16 +522,16 @@ int debug_main_2() {
     
     init_network();
     
-    load_train_image("/Users/hugofouquet/Epita/IMG_SRC/test");
+    load_train_image("/Users/hugofouquet/Epita/IMG_SRC/test/");
     start_teaching();
-    
+    get_text();
     return 0;
 }
 
 int main() {
 #if DEBUG > 1
     printf("Debug Version\n");
-    return debug_main();
+    return debug_main_2();
 #endif
     printf("Hello !\n   You can use 'help', 'load', 'saver', 'prepro', 'teach', 'compute', 'exit' or 'init' command.\n");
     init_sdl();

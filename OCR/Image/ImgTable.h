@@ -19,7 +19,7 @@
 #endif
 
 #define PRECISION 20
-#define SAPCE_PRECISION 5
+#define SAPCE_PRECISION 17
 
 struct paire {
     SDL_Rect rect;
