@@ -5,6 +5,7 @@ CC=gcc
 # Directories
 NET_DIR= Network
 IMG_DIR= Image
+INT_DIR= Interface/src
 
 # Sources
 COMMON_NET_SRCS= $(NET_DIR)/Core.c $(NET_DIR)/Execute.c $(NET_DIR)/DataSource.c $(NET_DIR)/Display.c $(NET_DIR)/Save.c
@@ -16,10 +17,15 @@ IMG_SRCS= $(COMMON_IMG_SRCS) $(IMG_MAIN)
 NET_MAIN= $(NET_DIR)/main.c
 NET_SRCS= $(COMMON_NET_SRCS) $(NET_MAIN)
 
-CPPFLAGS= `pkg-config --cflags sdl`
-CFLAGS= -Wall -Wextra -Werror -std=c99 -O3
-LDFLAGS= -lm
+INT_MAIN= $(INT_DIR)/main.c
+INT_SRCS= $(COMMON_NET_SRCS) $(COMMON_IMG_SRCS) $(INT_MAIN)
+
 LDLIBS= `pkg-config --libs sdl` -lSDL_image
+GTKLIB= `pkg-config --cflags --libs gtk+-3.0` 
+CPPFLAGS= `pkg-config --cflags sdl`
+CFLAGS= -Wall -Wextra -std=c99 -O3
+CCFLAGS= -pthread -g -O0 -pipe
+LDFLAGS= -lm -pthread $(GTKLIB) -export-dynamic
 
 SRCS= $(COMMON_NET_SRCS) $(COMMON_IMG_SRCS)
 OBJS= $(SRCS)
@@ -30,6 +36,9 @@ OBJ= ${SRC:.c=.o}
 all: main
 
 main: ${OBJS}
+
+inter: $(INT_SRCS)
+	$(CC) $(CFLAGS) $(LDLIBS) $(CCFLAGS) $(CPPFLAGS) $(LDFLAGS) $(GTKLIB) $^ -o $@
 
 img: $(IMG_SRCS)
 	$(CC) $(CFLAGS) $(LDLIBS) $(CPPFLAGS) $(LDFLAGS) $^ -o $@
